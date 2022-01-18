@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Welcome to Fruit Roulette"
+            android:text="@string/welcome_to_fruit_roulette"
             android:textSize="20sp" />
 
         <TextView
@@ -25,18 +25,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:minHeight="48dp"
+            android:onClick="newGame"
             android:paddingTop="20dp"
-            android:text="New Game"
-            android:onClick="newGame"/>
+            android:text="@string/new_game" />
 
         <TextView
             android:id="@+id/highScoresButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:minHeight="48dp"
             android:onClick="highScores"
             android:paddingTop="20dp"
-            android:text="High Scores" />
+            android:text="@string/high_scores" />
+
+        <TextView
+            android:id="@+id/quitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/quit"
+            android:paddingTop="20dp"
+            android:gravity="center_horizontal"/>
 
     </LinearLayout>
 
