@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,20 +26,27 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
         super(context, R.layout.selected_fruit, fruit);
         this.context = context;
         this.fruit = fruit;
-
+        this.fruit.add("placeholder");
     }
 
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return getFruitView(position, convertView, parent);
+        if (position == 0) {
+            return initialSelection(true);
+        }
+        return getFruitView(position-1, convertView, parent);
     }
 
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return getFruitView(position, convertView, parent);
+        if (position == 0) {
+            return initialSelection(false);
+        }
+        return getFruitView(position-1, convertView, parent);
     }
 
     public View getFruitView(int position, View convertView, ViewGroup parent) {
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.dropdown_fruit, parent, false);
         ImageView selectedFruitImg = row.findViewById(R.id.img);
@@ -49,5 +57,18 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
         selectedFruitImg.setImageDrawable(drawable);
 
         return row;
+
+    }
+
+    private View initialSelection(boolean dropdown) {
+        TextView view = new TextView(getContext());
+        view.setText("Fruit...");
+//        int spacing = getContext().getResources().getDimensionPixelSize(R.dimen.spacing_smaller);
+//        view.setPadding(0, spacing, 0, spacing);
+
+        if (dropdown) {
+            view.setHeight(0);
+        }
+        return view;
     }
 }

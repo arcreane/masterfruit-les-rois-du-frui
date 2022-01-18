@@ -5,10 +5,17 @@
       <map>
         <entry key="app/src/main/res/drawable/Strawberry.xml" value="0.32974358974358975" />
         <entry key="app/src/main/res/drawable/ic_banana.xml" value="0.23541666666666666" />
+        <entry key="app/src/main/res/drawable/ic_grape.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/drawable/ic_kiwi.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.23541666666666666" />
+        <entry key="app/src/main/res/drawable/ic_lemon.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/drawable/ic_orange.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/drawable/ic_pear.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/drawable/ic_raspberry.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/drawable/ic_strawberry.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/activity_gameplay.xml" value="0.2502771318874826" />
         <entry key="app/src/main/res/layout/dropdown_fruit.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/gameplay.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/gameplay.xml" value="0.26179116112584355" />
         <entry key="app/src/main/res/layout/main_menu.xml" value="0.1787037037037037" />
         <entry key="app/src/main/res/layout/selected_fruit.xml" value="0.16875" />
       </map>
