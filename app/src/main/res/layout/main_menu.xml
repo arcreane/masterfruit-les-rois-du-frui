@@ -7,18 +7,26 @@
     tools:context=".ui.MainMenu"
     android:padding="30dp">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/welcomeLabel"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="welcome to fruit roulette"
+        android:textSize="20sp"
 
-        <TextView
-            android:id="@+id/welcomeLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/welcome_to_fruit_roulette"
-            android:textSize="20sp" />
+
+        />
+
+    <LinearLayout
+        android:id="@+id/GameMenuLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcomeLabel"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:id="@+id/newGameLabel"
@@ -28,7 +36,14 @@
             android:minHeight="48dp"
             android:onClick="newGame"
             android:paddingTop="20dp"
-            android:text="@string/new_game" />
+            android:textColor="@color/green"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:text="new game"
+            android:shadowColor="@color/black"
+            android:shadowRadius="9"
+            android:shadowDx="9"
+            android:shadowDy="9"/>
 
         <TextView
             android:id="@+id/highScoresButton"
@@ -38,15 +53,22 @@
             android:minHeight="48dp"
             android:onClick="highScores"
             android:paddingTop="20dp"
-            android:text="@string/high_scores" />
+            android:text="highscores"
+            android:textColor="@color/orange"
+            android:textSize="20sp"
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/quitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/quit"
+            android:gravity="center_horizontal"
+            android:minHeight="48dp"
             android:paddingTop="20dp"
-            android:gravity="center_horizontal"/>
+            android:textColor="@color/red"
+            android:textSize="20sp"
+            android:text="quit"
+            android:textStyle="italic"/>
 
     </LinearLayout>
 
