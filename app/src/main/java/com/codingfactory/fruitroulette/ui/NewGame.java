@@ -1,11 +1,15 @@
 package com.codingfactory.fruitroulette.ui;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 import com.codingfactory.fruitroulette.R;
@@ -13,6 +17,10 @@ import com.codingfactory.fruitroulette.fruit.Fruit;
 import com.codingfactory.fruitroulette.logic.GamePlay;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EventListener;
+import java.util.List;
+import java.util.Locale;
 
 
 public class NewGame extends AppCompatActivity {
@@ -25,28 +33,39 @@ public class NewGame extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.gameplay);
 
-        Spinner firstChoice = findViewById(R.id.firstChoice);
-        Spinner secondChoice = findViewById(R.id.secondChoice);
-        Spinner thirdChoice = findViewById(R.id.thirdChoice);
-        Spinner forthChoice = findViewById(R.id.forthChoice);
+        Spinner firstChoice = findViewById(R.id.first);
+        Spinner secondChoice = findViewById(R.id.second);
+        Spinner thirdChoice = findViewById(R.id.third);
+        Spinner forthChoice = findViewById(R.id.forth);
 
-        ArrayList<String> fruitSelection = new ArrayList<>();
-        fruitSelection.add("ic_strawberry");
-        fruitSelection.add("ic_banana");
-        fruitSelection.add("ic_raspberry");
-        fruitSelection.add("ic_kiwi");
-        fruitSelection.add("ic_orange");
-        fruitSelection.add("ic_plum");
-        fruitSelection.add("ic_grapes");
-        fruitSelection.add("ic_lemon");
+        List<String> fruitSelection = Fruit.getImgList();
 
         SpinnerAdapter fruitAdapter = new SpinnerAdapter(getApplicationContext(), fruitSelection);
         fruitAdapter.setDropDownViewResource(R.layout.dropdown_fruit);
+
         firstChoice.setAdapter(fruitAdapter);
         secondChoice.setAdapter(fruitAdapter);
         thirdChoice.setAdapter(fruitAdapter);
         forthChoice.setAdapter(fruitAdapter);
 
 
+        AdapterView.OnItemSelectedListener toastMessage = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i != 0) {
+                    String spinner = adapterView.getResources().getResourceEntryName(adapterView.getId());
+                    Toast.makeText(getApplicationContext(), "Your " + spinner + " fruit is " +
+                            Fruit.getFruitName(i) + ".",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        };
+
+        firstChoice.setOnItemSelectedListener(toastMessage);
+        secondChoice.setOnItemSelectedListener(toastMessage);
+        thirdChoice.setOnItemSelectedListener(toastMessage);
+        forthChoice.setOnItemSelectedListener(toastMessage);
     }
 }

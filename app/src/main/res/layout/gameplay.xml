@@ -28,22 +28,22 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
         <Spinner
-            android:id="@+id/firstChoice"
+            android:id="@+id/first"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:gravity="center_vertical" />
             <Spinner
-                android:id="@+id/secondChoice"
+                android:id="@+id/second"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:gravity="center_vertical" />
             <Spinner
-                android:id="@+id/thirdChoice"
+                android:id="@+id/third"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:gravity="center_vertical" />
             <Spinner
-                android:id="@+id/forthChoice"
+                android:id="@+id/forth"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:gravity="center_vertical"
