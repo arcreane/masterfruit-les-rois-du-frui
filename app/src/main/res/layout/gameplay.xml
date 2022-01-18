@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Game Play goes here!"
+            android:textSize="30sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+        <Spinner
+            android:id="@+id/firstChoice"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:gravity="center_vertical" />
+            <Spinner
+                android:id="@+id/secondChoice"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center_vertical" />
+            <Spinner
+                android:id="@+id/thirdChoice"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center_vertical" />
+            <Spinner
+                android:id="@+id/forthChoice"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center_vertical"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
