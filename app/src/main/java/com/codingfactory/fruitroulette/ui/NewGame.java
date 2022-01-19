@@ -2,6 +2,8 @@ package com.codingfactory.fruitroulette.ui;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -14,10 +16,18 @@ import android.widget.Toast;
 import com.codingfactory.fruitroulette.R;
 import com.codingfactory.fruitroulette.fruit.Fruity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class NewGame extends AppCompatActivity {
+
+    private ArrayList<String[]> guesses;
+    private Spinner firstChoice;
+    private Spinner secondChoice;
+    private Spinner thirdChoice;
+    private Spinner fourthChoice;
+    private RecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +37,10 @@ public class NewGame extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.gameplay);
 
-        Spinner firstChoice = findViewById(R.id.first);
-        Spinner secondChoice = findViewById(R.id.second);
-        Spinner thirdChoice = findViewById(R.id.third);
-        Spinner forthChoice = findViewById(R.id.fourth);
+        firstChoice = findViewById(R.id.first);
+        secondChoice = findViewById(R.id.second);
+        thirdChoice = findViewById(R.id.third);
+        fourthChoice = findViewById(R.id.fourth);
 
         List<String> fruitSelection = Fruity.getImgList();
 
@@ -40,8 +50,7 @@ public class NewGame extends AppCompatActivity {
         firstChoice.setAdapter(fruitAdapter);
         secondChoice.setAdapter(fruitAdapter);
         thirdChoice.setAdapter(fruitAdapter);
-        forthChoice.setAdapter(fruitAdapter);
-
+        fourthChoice.setAdapter(fruitAdapter);
 
         AdapterView.OnItemSelectedListener toastMessage = new AdapterView.OnItemSelectedListener() {
             @Override
@@ -57,9 +66,38 @@ public class NewGame extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) { }
         };
 
+        //This will be moved to logic:
+        guesses = new ArrayList<>();
+        guesses.add(new String[]{"ic_banana", "ic_kiwi", "ic_raspberry", "ic_lemon"});
+        guesses.add(new String[]{"ic_lemon", "ic_raspberry", "ic_grapes", "ic_orange"});
+
         firstChoice.setOnItemSelectedListener(toastMessage);
         secondChoice.setOnItemSelectedListener(toastMessage);
         thirdChoice.setOnItemSelectedListener(toastMessage);
-        forthChoice.setOnItemSelectedListener(toastMessage);
+        fourthChoice.setOnItemSelectedListener(toastMessage);
+
+        RecyclerView guessView = findViewById(R.id.guessView);
+        adapter = new RecyclerAdapter(this);
+        adapter.setGuesses(guesses);
+        guessView.setAdapter(adapter);
+        guessView.setLayoutManager(new LinearLayoutManager(this));
+//        guessView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+
+    }
+
+    public void addGuess(View view) {
+        int firstFruit = firstChoice.getSelectedItemPosition();
+        int secondFruit = secondChoice.getSelectedItemPosition();
+        int thirdFruit = thirdChoice.getSelectedItemPosition();
+        int fourthFruit = fourthChoice.getSelectedItemPosition();
+
+        guesses.add(new String[]{
+                Fruity.getFruitImg(firstFruit),
+                Fruity.getFruitImg(secondFruit),
+                Fruity.getFruitImg(thirdFruit),
+                Fruity.getFruitImg(fourthFruit)
+        });
+        adapter.notifyDataSetChanged();
     }
 }

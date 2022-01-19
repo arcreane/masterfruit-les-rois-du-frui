@@ -46,7 +46,6 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
     }
 
     public View getFruitView(int position, View convertView, ViewGroup parent) {
-
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.dropdown_fruit, parent, false);
         ImageView selectedFruitImg = row.findViewById(R.id.img);

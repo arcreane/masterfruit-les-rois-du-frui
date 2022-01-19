@@ -51,4 +51,11 @@ public enum Fruity {
         }
         return name.toLowerCase();
     }
+
+    public static String getFruitImg(int id) {
+        for (Fruity i : Fruity.values()) {
+            if (i.id == id) return i.img;
+        }
+        return null;
+    }
 }
