@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class GameRound {
 
-
     private final ArrayList<Fruit> pickedArray;
 
     public GameRound(ArrayList<Fruit> pickedArray) {

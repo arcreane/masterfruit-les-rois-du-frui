@@ -1,6 +1,6 @@
 package com.codingfactory.fruitroulette.Fruits;
 
-public abstract class Fruit {
+public class Fruit {
 
     boolean pealing;
     boolean seeds;

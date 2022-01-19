@@ -1,13 +1,11 @@
 package com.codingfactory.fruitroulette.Fruits;
 
-
 public class Grape extends Fruit {
-    pealing = false;
-    seeds = true;
-    id = 7;
-    img = "ic_grapes";
 
     public Grape() {
-
+        boolean pealing = false;
+        boolean seeds = true;
+        int id = 7;
+        String img = "ic_grapes";
     }
 }
