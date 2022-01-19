@@ -84,7 +84,7 @@ public class NewGame extends AppCompatActivity {
         //ProgressBar decrement on action guess Button
         b_Guess = findViewById(R.id.b_Guess);
         pB_Attempt = findViewById(R.id.pB_Attempt);
-        b_Guess.setOnClickListener(v -> {
+        b_Guess.setOnClickListener(View -> {
             GameIteration gameIteration = new GameIteration();
             int progress = gameIteration.getAttempts(); // = 10
             pB_Attempt.setProgress(--progress,true);
