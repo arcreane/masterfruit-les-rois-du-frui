@@ -7,20 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 
 import com.codingfactory.fruitroulette.R;
-import com.codingfactory.fruitroulette.fruit.Fruit;
-import com.codingfactory.fruitroulette.logic.GamePlay;
+import com.codingfactory.fruitroulette.fruit.Fruity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EventListener;
 import java.util.List;
-import java.util.Locale;
 
 
 public class NewGame extends AppCompatActivity {
@@ -38,7 +32,7 @@ public class NewGame extends AppCompatActivity {
         Spinner thirdChoice = findViewById(R.id.third);
         Spinner forthChoice = findViewById(R.id.fourth);
 
-        List<String> fruitSelection = Fruit.getImgList();
+        List<String> fruitSelection = Fruity.getImgList();
 
         SpinnerAdapter fruitAdapter = new SpinnerAdapter(getApplicationContext(), fruitSelection);
         fruitAdapter.setDropDownViewResource(R.layout.dropdown_fruit);
@@ -55,7 +49,7 @@ public class NewGame extends AppCompatActivity {
                 if (i != 0) {
                     String spinner = adapterView.getResources().getResourceEntryName(adapterView.getId());
                     Toast.makeText(getApplicationContext(), "Your " + spinner + " fruit is " +
-                            Fruit.getFruitName(i) + ".",Toast.LENGTH_SHORT).show();
+                            Fruity.getFruitName(i) + ".",Toast.LENGTH_SHORT).show();
                 }
             }
 

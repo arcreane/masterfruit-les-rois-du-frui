@@ -1,6 +1,6 @@
 package com.codingfactory.fruitroulette.logic;
 
-import com.codingfactory.fruitroulette.fruit.Fruit;
+import com.codingfactory.fruitroulette.fruit.Fruity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +8,10 @@ import java.util.List;
 public class GamePlay {
 
     private int attempts;
-    private List<Fruit> row;
+    private List<Fruity> row;
     private List<Boolean> firstHint;
     private List<Boolean> secondHint;
-    private List<List<Fruit>> attemptsHistory;
+    private List<List<Fruity>> attemptsHistory;
 
     public GamePlay() {
         this.attempts = 10;
@@ -29,7 +29,7 @@ public class GamePlay {
 
     public List<Boolean> getFirstHint() {
         if (canIGetAHint(2)) {
-            for (Fruit i : this.row) {
+            for (Fruity i : this.row) {
                 this.firstHint.add(i.hasSeeds());
             }
             attempts -= 2;
@@ -39,7 +39,7 @@ public class GamePlay {
 
     public List<Boolean> getSecondHint() {
         if (canIGetAHint(3)) {
-            for (Fruit i : this.row) {
+            for (Fruity i : this.row) {
                 this.secondHint.add(i.needsPeeling());
             }
             attempts -= 3;
