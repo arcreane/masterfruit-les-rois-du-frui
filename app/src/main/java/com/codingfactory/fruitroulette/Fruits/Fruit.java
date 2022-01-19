@@ -1,9 +1,16 @@
 package com.codingfactory.fruitroulette.Fruits;
 
 public class Fruit {
+
     boolean pealing;
     boolean seeds;
-    boolean discovered;
+    int discovered = 0;
+    String img;
+    int id;
+
+    public Fruit() {
+
+    }
 
     public boolean isPealable() {
         return pealing;
@@ -13,11 +20,17 @@ public class Fruit {
         return seeds;
     }
 
-    public boolean isDiscovered() {
+    public int isDiscovered() {
         return discovered;
     }
 
-    public void setDiscovered(boolean discovered) {
+    public void setDiscovered(int discovered) {
         this.discovered = discovered;
+    }
+
+    public String getImg() { return this.img; }
+
+    public int getId() {
+        return this.id;
     }
 }

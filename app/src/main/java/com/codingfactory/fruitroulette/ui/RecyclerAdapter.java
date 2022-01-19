@@ -10,13 +10,14 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.codingfactory.fruitroulette.Fruits.Fruit;
 import com.codingfactory.fruitroulette.R;
 
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    private ArrayList<String[]> guesses = new ArrayList<>();
+    private ArrayList<ArrayList<Fruit>> guesses = new ArrayList<>();
 
     private Context context;
 
@@ -36,18 +37,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ImageView[] imgs = {holder.firstImg, holder.secondImg, holder.thirdImg, holder.fourthImg};
 
-        holder.firstImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[0], "drawable", context.getPackageName()));
-        holder.secondImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[1], "drawable", context.getPackageName()));
-        holder.thirdImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[2], "drawable", context.getPackageName()));
-        holder.fourthImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[3], "drawable", context.getPackageName()));
+        holder.firstImg.setImageResource(context.getResources().getIdentifier(guesses.get(position).get(0).getImg(), "drawable", context.getPackageName()));
+        holder.secondImg.setImageResource(context.getResources().getIdentifier(guesses.get(position).get(1).getImg(), "drawable", context.getPackageName()));
+        holder.thirdImg.setImageResource(context.getResources().getIdentifier(guesses.get(position).get(2).getImg(), "drawable", context.getPackageName()));
+        holder.fourthImg.setImageResource(context.getResources().getIdentifier(guesses.get(position).get(3).getImg(), "drawable", context.getPackageName()));
 
         // Test if banana not on the list:
-        for (int i = 0; i < 4; i++) {
-            if (guesses.get(position)[i].equals("ic_banana")) {
-                imgs[i].setColorFilter(Color.LTGRAY);
-                break;
-            }
-        }
+//        for (int i = 0; i < 4; i++) {
+//            if (guesses.get(position)[i].equals("ic_banana")) {
+//                imgs[i].setColorFilter(Color.LTGRAY);
+//                break;
+//            }
+//        }
     }
 
     @Override
@@ -55,7 +56,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return this.guesses.size();
     }
 
-    public void setGuesses(ArrayList<String[]> guesses) {
+    public void setGuesses(ArrayList<ArrayList<Fruit>> guesses) {
         this.guesses = guesses;
         notifyDataSetChanged();
     }

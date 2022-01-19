@@ -6,5 +6,7 @@ public class Lemon extends Fruit {
         pealing = true;
         seeds = true;
         discovered = false;
+        id = 8;
+        img = "ic_lemon";
     }
 }
