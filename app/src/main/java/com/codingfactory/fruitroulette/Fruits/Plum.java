@@ -1,4 +1,4 @@
-package Fruits;
+package com.codingfactory.fruitroulette.Fruits;
 
 
 public class Plum extends Fruit {

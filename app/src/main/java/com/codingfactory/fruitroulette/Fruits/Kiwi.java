@@ -1,4 +1,4 @@
-package Fruits;
+package com.codingfactory.fruitroulette.Fruits;
 
 public class Kiwi extends Fruit {
     public Kiwi() {
