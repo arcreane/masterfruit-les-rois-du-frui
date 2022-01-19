@@ -27,4 +27,9 @@ public class MainMenu extends AppCompatActivity {
 //        newIntent.putExtra();
         startActivity(gameIntent);
     }
+    public void quit(View view) {
+        Intent quitIntent = new Intent(MainMenu.this, Quit.class);
+//        newIntent.putExtra();
+        startActivity(quitIntent);
+    }
 }
