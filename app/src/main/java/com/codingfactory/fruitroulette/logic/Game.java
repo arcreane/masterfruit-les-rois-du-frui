@@ -10,7 +10,6 @@ public class Game {
     public Game() {
     }
 
-
     public void launchGame(){
         for (int i =0; i<3; i++){
             GameIteration curGameIteration = new GameIteration();

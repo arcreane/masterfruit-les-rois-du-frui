@@ -13,8 +13,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
+import com.codingfactory.fruitroulette.Fruits.*;
 import com.codingfactory.fruitroulette.R;
 import com.codingfactory.fruitroulette.fruit.Fruity;
+import com.codingfactory.fruitroulette.logic.Game;
+import com.codingfactory.fruitroulette.logic.GameRound;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +25,7 @@ import java.util.List;
 
 public class NewGame extends AppCompatActivity {
 
-    private ArrayList<String[]> guesses;
+    private ArrayList<ArrayList<Fruit>> guesses;
     private Spinner firstChoice;
     private Spinner secondChoice;
     private Spinner thirdChoice;
@@ -67,9 +70,18 @@ public class NewGame extends AppCompatActivity {
         };
 
         //This will be moved to logic:
+        Game game = new Game();
+        game.launchGame();
+
         guesses = new ArrayList<>();
-        guesses.add(new String[]{"ic_banana", "ic_kiwi", "ic_raspberry", "ic_lemon"});
-        guesses.add(new String[]{"ic_lemon", "ic_raspberry", "ic_grapes", "ic_orange"});
+
+        ArrayList<Fruit> firstRow = new ArrayList<>();
+        firstRow.add(new Banana());
+        firstRow.add(new Kiwi());
+        firstRow.add(new Lemon());
+        firstRow.add(new Grape());
+
+        guesses.add(firstRow);
 
         firstChoice.setOnItemSelectedListener(toastMessage);
         secondChoice.setOnItemSelectedListener(toastMessage);
@@ -82,8 +94,6 @@ public class NewGame extends AppCompatActivity {
         guessView.setAdapter(adapter);
         guessView.setLayoutManager(new LinearLayoutManager(this));
 //        guessView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-
     }
 
     public void addGuess(View view) {
@@ -92,12 +102,45 @@ public class NewGame extends AppCompatActivity {
         int thirdFruit = thirdChoice.getSelectedItemPosition();
         int fourthFruit = fourthChoice.getSelectedItemPosition();
 
-        guesses.add(new String[]{
-                Fruity.getFruitImg(firstFruit),
-                Fruity.getFruitImg(secondFruit),
-                Fruity.getFruitImg(thirdFruit),
-                Fruity.getFruitImg(fourthFruit)
-        });
+        int[] choices = new int[]{firstFruit, secondFruit, thirdFruit, fourthFruit};
+        ArrayList<Fruit> attempt = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            switch (choices[i]) {
+                case 1:
+                    attempt.add(new Strawberry());
+                    break;
+                case 2:
+                    attempt.add(new Banana());
+                    break;
+                case 3:
+                    attempt.add(new Raspberry());
+                    break;
+                case 4:
+                    attempt.add(new Kiwi());
+                    break;
+                case 5:
+                    attempt.add(new Orange());
+                    break;
+                case 6:
+                    attempt.add(new Plum());
+                    break;
+                case 7:
+                    attempt.add(new Grape());
+                    break;
+                case 8:
+                    attempt.add(new Lemon());
+                    break;
+            }
+        }
+//        GameRound = new GameRound(attempt);
+        
+
+//        guesses.add(new String[]{
+//                Fruity.getFruitImg(firstFruit),
+//                Fruity.getFruitImg(secondFruit),
+//                Fruity.getFruitImg(thirdFruit),
+//                Fruity.getFruitImg(fourthFruit)
+//        });
         adapter.notifyDataSetChanged();
     }
 }
