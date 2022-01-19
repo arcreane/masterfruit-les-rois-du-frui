@@ -32,4 +32,8 @@ public class MainMenu extends AppCompatActivity {
 //        newIntent.putExtra();
         startActivity(quitIntent);
     }
+
+    /*public int progressBarIncrement (){
+
+    }*/
 }
