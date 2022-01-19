@@ -36,7 +36,7 @@ public class NewGame extends AppCompatActivity {
         Spinner firstChoice = findViewById(R.id.first);
         Spinner secondChoice = findViewById(R.id.second);
         Spinner thirdChoice = findViewById(R.id.third);
-        Spinner forthChoice = findViewById(R.id.forth);
+        Spinner forthChoice = findViewById(R.id.fourth);
 
         List<String> fruitSelection = Fruit.getImgList();
 

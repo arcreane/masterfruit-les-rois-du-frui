@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView"
@@ -17,41 +19,86 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Game Play goes here!"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="40dp"
+            tools:layout_conversion_absoluteWidth="291dp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal" />
+            android:id="@+id/recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:layout_conversion_absoluteHeight="300dp"
+            tools:layout_conversion_absoluteWidth="393dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-        <Spinner
-            android:id="@+id/first"
-            android:layout_width="100dp"
             android:layout_height="100dp"
-            android:gravity="center_vertical" />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Spinner
+                android:id="@+id/first"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center_vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_conversion_absoluteHeight="100dp"
+                tools:layout_conversion_absoluteWidth="100dp"
+                tools:layout_editor_absoluteY="640dp" />
+
             <Spinner
                 android:id="@+id/second"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+
+                app:layout_constraintEnd_toStartOf="@+id/third"
+                app:layout_constraintStart_toEndOf="@+id/first"
+                tools:layout_conversion_absoluteHeight="100dp"
+                tools:layout_conversion_absoluteWidth="100dp"
+                tools:layout_editor_absoluteY="640dp" />
+
             <Spinner
                 android:id="@+id/third"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                app:layout_constraintEnd_toStartOf="@+id/fourth"
+                tools:layout_editor_absoluteY="640dp" />
+
             <Spinner
-                android:id="@+id/forth"
+                android:id="@+id/fourth"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:gravity="center_vertical"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteY="640dp" />
 
         </LinearLayout>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="120dp"
+            android:height="50dp"
+            android:maxHeight="10dp"
+            android:text="Guess"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </RelativeLayout>
