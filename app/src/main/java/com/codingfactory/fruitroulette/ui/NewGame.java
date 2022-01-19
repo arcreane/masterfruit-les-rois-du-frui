@@ -17,16 +17,17 @@ import com.codingfactory.fruitroulette.R;
 import com.codingfactory.fruitroulette.fruit.Fruity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class NewGame extends AppCompatActivity {
 
     private ArrayList<String[]> guesses;
-    private Spinner firstChoice;
-    private Spinner secondChoice;
-    private Spinner thirdChoice;
-    private Spinner fourthChoice;
+    private Spinner firstChoice, secondChoice, thirdChoice, fourthChoice;
+    private Spinner[] choices;
     private RecyclerAdapter adapter;
 
     @Override
@@ -47,10 +48,9 @@ public class NewGame extends AppCompatActivity {
         SpinnerAdapter fruitAdapter = new SpinnerAdapter(getApplicationContext(), fruitSelection);
         fruitAdapter.setDropDownViewResource(R.layout.dropdown_fruit);
 
-        firstChoice.setAdapter(fruitAdapter);
-        secondChoice.setAdapter(fruitAdapter);
-        thirdChoice.setAdapter(fruitAdapter);
-        fourthChoice.setAdapter(fruitAdapter);
+        choices = new Spinner[]{firstChoice, secondChoice, thirdChoice, fourthChoice};
+
+        Arrays.stream(choices).sequential().forEach(e -> e.setAdapter(fruitAdapter));
 
         AdapterView.OnItemSelectedListener toastMessage = new AdapterView.OnItemSelectedListener() {
             @Override
@@ -71,33 +71,47 @@ public class NewGame extends AppCompatActivity {
         guesses.add(new String[]{"ic_banana", "ic_kiwi", "ic_raspberry", "ic_lemon"});
         guesses.add(new String[]{"ic_lemon", "ic_raspberry", "ic_grapes", "ic_orange"});
 
-        firstChoice.setOnItemSelectedListener(toastMessage);
-        secondChoice.setOnItemSelectedListener(toastMessage);
-        thirdChoice.setOnItemSelectedListener(toastMessage);
-        fourthChoice.setOnItemSelectedListener(toastMessage);
+//        Arrays.stream(choices).sequential().forEach(e -> e.setOnItemSelectedListener(toastMessage));
 
         RecyclerView guessView = findViewById(R.id.guessView);
         adapter = new RecyclerAdapter(this);
         adapter.setGuesses(guesses);
         guessView.setAdapter(adapter);
         guessView.setLayoutManager(new LinearLayoutManager(this));
-//        guessView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-
+        choices = new Spinner[]{firstChoice, secondChoice, thirdChoice, fourthChoice};
     }
 
     public void addGuess(View view) {
-        int firstFruit = firstChoice.getSelectedItemPosition();
-        int secondFruit = secondChoice.getSelectedItemPosition();
-        int thirdFruit = thirdChoice.getSelectedItemPosition();
-        int fourthFruit = fourthChoice.getSelectedItemPosition();
+        if (emptyFields()) {
+            Toast.makeText(getApplicationContext(), "Uh oh, some fruit is missing!", Toast.LENGTH_SHORT).show();
+        } else if (distinctChoices()) {
+            int firstFruit = firstChoice.getSelectedItemPosition();
+            int secondFruit = secondChoice.getSelectedItemPosition();
+            int thirdFruit = thirdChoice.getSelectedItemPosition();
+            int fourthFruit = fourthChoice.getSelectedItemPosition();
 
-        guesses.add(new String[]{
-                Fruity.getFruitImg(firstFruit),
-                Fruity.getFruitImg(secondFruit),
-                Fruity.getFruitImg(thirdFruit),
-                Fruity.getFruitImg(fourthFruit)
-        });
-        adapter.notifyDataSetChanged();
+            guesses.add(new String[]{
+                    Fruity.getFruitImg(firstFruit),
+                    Fruity.getFruitImg(secondFruit),
+                    Fruity.getFruitImg(thirdFruit),
+                    Fruity.getFruitImg(fourthFruit)});
+            adapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(getApplicationContext(), "Uh oh, no two fruits can be the same!",Toast.LENGTH_SHORT).show();
+        }
     }
+
+    public boolean emptyFields() {
+        for (Spinner s : choices) {
+            if (s.getSelectedItemPosition() == 0) return true;
+        }
+        return false;
+    }
+
+    public boolean distinctChoices() {
+        Set<Integer> s = new HashSet<Integer>();
+        Arrays.stream(choices).sequential().forEach(e -> s.add(e.getSelectedItemPosition()));
+        return (s.size() == 4);
+        }
 }
+//

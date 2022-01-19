@@ -2,6 +2,7 @@ package com.codingfactory.fruitroulette.ui;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,7 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
     private View initialSelection(boolean dropdown) {
         TextView view = new TextView(getContext());
         view.setText("Fruit...");
+        view.setTextColor(Color.WHITE);
 //        int spacing = getContext().getResources().getDimensionPixelSize(R.dimen.spacing_smaller);
 //        view.setPadding(0, spacing, 0, spacing);
 
