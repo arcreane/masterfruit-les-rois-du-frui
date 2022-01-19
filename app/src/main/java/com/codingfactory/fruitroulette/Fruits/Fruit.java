@@ -4,7 +4,7 @@ public class Fruit {
 
     boolean pealing;
     boolean seeds;
-    boolean discovered;
+    int discovered = 0;
     String img;
     int id;
 
@@ -20,11 +20,11 @@ public class Fruit {
         return seeds;
     }
 
-    public boolean isDiscovered() {
+    public int isDiscovered() {
         return discovered;
     }
 
-    public void setDiscovered(boolean discovered) {
+    public void setDiscovered(int discovered) {
         this.discovered = discovered;
     }
 

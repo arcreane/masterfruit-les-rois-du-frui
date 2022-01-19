@@ -6,27 +6,33 @@ import java.util.ArrayList;
 
 public class GameRound {
 
-    private final ArrayList<Fruit> pickedArray;
+    private final ArrayList<Integer> pickedArray;
 
-    public GameRound(ArrayList<Fruit> pickedArray) {
+    public GameRound(ArrayList<Integer> pickedArray) {
         this.pickedArray = pickedArray;
     }
 
-    public ArrayList<Fruit> getPickedArray() {
+    public ArrayList<Integer> getPickedArray() {
         return pickedArray;
     }
 
-    public void GamePlay(GameIteration CurrentGameIteration) {
-        ConsoleDisplays.FruitDisplay(CurrentGameIteration.getRow());
-        for (Fruit pikedFruit : pickedArray) {
-            if (pikedFruit.getClass().getSimpleName().equals(CurrentGameIteration.getRow().get(pickedArray.indexOf(pikedFruit)).getClass().getSimpleName())) {
-                System.out.println("vous avez découvert le fruit : " + pikedFruit.getClass().getSimpleName()
-                        + " en position " + pickedArray.indexOf(pikedFruit));
-                CurrentGameIteration.getRow().get(pickedArray.indexOf(pikedFruit)).setDiscovered(true);
-                CurrentGameIteration.incFruitDiscovered();
-            } else {
-                System.out.println(pikedFruit.getClass().getSimpleName() + " ne correspond pas au fruit en case " + (pickedArray.indexOf(pikedFruit) + 1));
+    public void GamePlay(GameIteration currentGameIteration) {
+        ConsoleDisplays.FruitDisplay(currentGameIteration.getRow());
+        int i =0;
+        for (Integer pikedFruit : pickedArray) {
+            if (pikedFruit==currentGameIteration.getRow().get(i).getId()) {
+                currentGameIteration.getRow().get(pickedArray.indexOf(pikedFruit)).setDiscovered(2);
+                currentGameIteration.incFruitDiscovered();
             }
+            else {
+                for (Fruit rdmFruit : currentGameIteration.getRow()){
+                    if (rdmFruit.getId() == pikedFruit){
+                        currentGameIteration.getRow().get(pickedArray.indexOf(pikedFruit)).setDiscovered(1);
+                        break;
+                    }
+                }
+            }
+            i++;
         }
     }
 }

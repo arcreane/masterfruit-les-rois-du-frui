@@ -31,8 +31,8 @@ public class GameIteration {
         return iterationScore;
     }
 
-    public ArrayList<ArrayList<Fruit>> getPickedFruitsHistory() {
-        ArrayList<ArrayList<Fruit>> pickedFruitsHistory = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> getPickedFruitsHistory() {
+        ArrayList<ArrayList<Integer>> pickedFruitsHistory = new ArrayList<>();
         for (GameRound prevRound : roundHistory){
             pickedFruitsHistory.add(prevRound.getPickedArray());
         }
@@ -80,7 +80,7 @@ public class GameIteration {
 
     public void GameLoop() {
         while (this.getAttempts() > 0 && this.getFruitDiscovered() < 5) {
-            GameRound currentRound = new GameRound(RandomFruits.randomFruit());
+            GameRound currentRound = new GameRound();
             currentRound.GamePlay(this);
             roundHistory.add(currentRound);
             this.getPickedFruitsHistory();
