@@ -33,7 +33,7 @@ public class GameIteration {
 
     public ArrayList<ArrayList<Integer>> getPickedFruitsHistory() {
         ArrayList<ArrayList<Integer>> pickedFruitsHistory = new ArrayList<>();
-        for (GameRound prevRound : roundHistory){
+        for (GameRound prevRound : roundHistory) {
             pickedFruitsHistory.add(prevRound.getPickedArray());
         }
         System.out.println(pickedFruitsHistory);
@@ -79,7 +79,7 @@ public class GameIteration {
     }
 
     public void GameLoop() {
-        while (this.getAttempts() > 0 && this.getFruitDiscovered() < 5) {
+        while (this.getAttempts() > 0 && this.getFruitDiscovered() < 4) {
             GameRound currentRound = new GameRound();
             currentRound.GamePlay(this);
             roundHistory.add(currentRound);

@@ -67,3 +67,10 @@ local.properties
 .gradle/buildOutputCleanup/buildOutputCleanup.lock
 .gradle/buildOutputCleanup/outputFiles.bin
 .gradle/7.0.2/executionHistory/executionHistory.bin
+*.icloud
+.gradle/7.0.2/executionHistory/executionHistory.bin
+.gradle/7.0.2/executionHistory/executionHistory.lock
+.gradle/7.0.2/fileHashes/fileHashes.bin
+.gradle/7.0.2/fileHashes/fileHashes.lock
+.gradle/7.0.2/fileHashes/resourceHashesCache.bin
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
