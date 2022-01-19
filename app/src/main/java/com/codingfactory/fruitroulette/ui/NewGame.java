@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -19,6 +20,7 @@ import com.codingfactory.fruitroulette.Fruits.*;
 import com.codingfactory.fruitroulette.R;
 import com.codingfactory.fruitroulette.fruit.Fruity;
 import com.codingfactory.fruitroulette.logic.Game;
+import com.codingfactory.fruitroulette.logic.GameIteration;
 import com.codingfactory.fruitroulette.logic.GameRound;
 
 import java.util.ArrayList;
@@ -36,6 +38,8 @@ public class NewGame extends AppCompatActivity {
     private RecyclerAdapter adapter;
     private ProgressBar pB_Attempt;
     private Button b_Guess;
+    private TextView tV_ScoreCount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +73,30 @@ public class NewGame extends AppCompatActivity {
                 }
             }
 
+
+
+
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
         };
 
-        //This will be moved to logic:
-        guesses = new ArrayList<>();
+        //ProgressBar decrement on action guess Button
+        b_Guess = findViewById(R.id.b_Guess);
+        pB_Attempt = findViewById(R.id.pB_Attempt);
+        b_Guess.setOnClickListener(v -> {
+            GameIteration gameIteration = new GameIteration();
+            int progress = gameIteration.getAttempts(); // = 10
+            pB_Attempt.setProgress(--progress,true);
+        });
+        //Score Increment
+        tV_ScoreCount = findViewById(R.id.tV_ScoreCount);
+
+
+
+
+                //This will be moved to logic:
+                guesses = new ArrayList<>();
         guesses.add(new String[]{"ic_banana", "ic_kiwi", "ic_raspberry", "ic_lemon"});
         guesses.add(new String[]{"ic_lemon", "ic_raspberry", "ic_grapes", "ic_orange"});
 
@@ -108,6 +130,8 @@ public class NewGame extends AppCompatActivity {
         }
     }
 
+
+
     public boolean emptyFields() {
         for (Spinner s : choices) {
             if (s.getSelectedItemPosition() == 0) return true;
@@ -120,5 +144,7 @@ public class NewGame extends AppCompatActivity {
         Arrays.stream(choices).sequential().forEach(e -> s.add(e.getSelectedItemPosition()));
         return (s.size() == 4);
         }
+
+
 }
 //
