@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -28,6 +30,8 @@ public class NewGame extends AppCompatActivity {
     private Spinner thirdChoice;
     private Spinner fourthChoice;
     private RecyclerAdapter adapter;
+    private ProgressBar pB_Attempt;
+    private Button b_Guess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,5 +103,23 @@ public class NewGame extends AppCompatActivity {
                 Fruity.getFruitImg(fourthFruit)
         });
         adapter.notifyDataSetChanged();
+
+
+        //ProgressBar action with Button
+        b_Guess = findViewById(R.id.b_Guess);
+        pB_Attempt = findViewById(R.id.pB_Attempt);
+
+        b_Guess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int progress = pB_Attempt.getProgress();
+                pB_Attempt.setProgress(++progress,true);
+
+
+
+
+            }
+        });
+
     }
 }
