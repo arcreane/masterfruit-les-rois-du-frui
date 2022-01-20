@@ -70,7 +70,7 @@
         android:orientation="vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:paddingTop="100dp">
+        android:paddingTop="95dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/guessView"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainMenu"
     android:paddingTop="200dp"
-    android:background="#F6EFC4"
+    android:background="#FFD8A8"
     android:paddingBottom="200dp">
 
     <TextView

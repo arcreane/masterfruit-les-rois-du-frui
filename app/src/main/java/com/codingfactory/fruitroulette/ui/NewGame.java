@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
@@ -37,6 +39,7 @@ public class NewGame extends AppCompatActivity {
     private ProgressBar pb_attempt;
     private ImageView get_hint;
     private Dialog dialog;
+    private EditText playerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,6 @@ public class NewGame extends AppCompatActivity {
         fourthChoice = findViewById(R.id.fourth);
         pb_attempt = findViewById(R.id.pb_attempt);
         get_hint = findViewById(R.id.get_hint);
-        dialog = new Dialog(this);
 
         List<String> fruitImgs = new ArrayList<>();
         game.getPossibleFruit().stream().sorted().forEach(e -> fruitImgs.add(e.getImg()));
@@ -63,15 +65,14 @@ public class NewGame extends AppCompatActivity {
         fruitAdapter.setDropDownViewResource(R.layout.dropdown_fruit);
 
         choices = new Spinner[]{firstChoice, secondChoice, thirdChoice, fourthChoice};
-
         Arrays.stream(choices).sequential().forEach(e -> e.setAdapter(fruitAdapter));
 
-        Button guessButton = findViewById(R.id.b_Guess);
         pb_attempt.setMax(10);
         pb_attempt.setMin(0);
         pb_attempt.setProgress(10);
         TextView score = findViewById(R.id.score_count);
 
+        Button guessButton = findViewById(R.id.b_Guess);
         guessButton.setOnClickListener(view -> {
             if (emptyFields()) {
                 Toast.makeText(getApplicationContext(), "Uh oh, some fruit is missing!", Toast.LENGTH_SHORT).show();
@@ -82,7 +83,7 @@ public class NewGame extends AppCompatActivity {
                 int fourthFruit = fourthChoice.getSelectedItemPosition()-1;
                 int intArray[] = {firstFruit, secondFruit, thirdFruit, fourthFruit};
                 if (game.makeAGuess(intArray)) {
-                    openEndGameDialog();
+                    openEndGameDialog(R.layout.end_dialog);
                     adapter.clear();
                     System.out.println(game.getCumulatedScore());
                     score.setText(String.valueOf(game.getCumulatedScore()));
@@ -128,8 +129,8 @@ public class NewGame extends AppCompatActivity {
         });
     }
 
-    private void openEndGameDialog() {
-        dialog.setContentView(R.layout.end_dialog);
+    private void openEndGameDialog(int resourceId) {
+        dialog.setContentView(resourceId);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }
@@ -156,16 +157,29 @@ public class NewGame extends AppCompatActivity {
     }
 
     public void newRound (View view) {
-            game.newRound();
+        pb_attempt.setProgress(10);
+        game.newRound();
             dialog.dismiss();
     };
 
     public void restart(View view) {
+        pb_attempt.setProgress(10);
         game.reset();
         dialog.dismiss();
     }
 
     public void quit(View view) {
-        dialog.dismiss();
+        if (game.getCumulatedScore() > 0) {
+            openEndGameDialog(R.layout.new_score_dialog);
+        }
+    }
+
+    public void addScore(View view) {
+        playerName = dialog.findViewById(R.id.playerName);
+        System.out.println(playerName.getText());
+        if (!playerName.getText().equals("")) {
+               dialog.dismiss();
+               finish();
+        }
     }
 }
