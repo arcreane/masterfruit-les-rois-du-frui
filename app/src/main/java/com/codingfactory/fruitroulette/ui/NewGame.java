@@ -84,6 +84,7 @@ public class NewGame extends AppCompatActivity {
                 if (game.makeAGuess(intArray)) {
                     openEndGameDialog();
                     adapter.clear();
+                    System.out.println(game.getCumulatedScore());
                     score.setText(String.valueOf(game.getCumulatedScore()));
                 }
                 pb_attempt.setProgress(game.getAttempts(), true);
@@ -152,7 +153,6 @@ public class NewGame extends AppCompatActivity {
             game.getFirstHint();
         }
     }
-
 
     public void newRound (View view) {
             game.newRound();

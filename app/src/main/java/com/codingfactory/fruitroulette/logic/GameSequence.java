@@ -110,21 +110,14 @@ public class GameSequence {
         }
         adapter.newLine(recyclerLine);
         adapter.addPositions(rightPosition, wrongPosition);
-        this.imgType = 0;
+        if (fruitDiscovered == 4) cumulatedScore += attempts;
         return roundOver();
     }
 
     public void newRound() {
-        reset();
-        cumulatedScore += attempts;
-    }
-
-    public int getRightPosition() {
-        return rightPosition;
-    }
-
-    public int getWrongPosition() {
-        return wrongPosition;
+        attempts = 10;
+        adapter.clear();
+        hiddenFruit = fruitGenerator();
     }
 
     public void setAdapter(RecyclerAdapter adapter) {
@@ -140,9 +133,8 @@ public class GameSequence {
     }
 
     public void reset() {
-        attempts = 10;
-        adapter.clear();
-        hiddenFruit = fruitGenerator();
+        newRound();
+        cumulatedScore = 0;
     }
 
     public int getCumulatedScore() {
