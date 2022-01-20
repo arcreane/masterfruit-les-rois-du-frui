@@ -20,13 +20,20 @@
         <item name="android:itemBackground">@color/black</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowBackground">@null</item>
-        <item name="android:textColor">#ffffffff</item>"
+        <item name="android:textColor">#ffffffff</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="ThemeOverlay.FruitRoulette.FullscreenContainer" parent="">
-        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
-        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+
+    <style name="Theme.FruitRoulette.MainMenu" parent="Theme.FruitRoulette">
+        <item name="android:textColor">#000000</item>
+        <item name="fontFamily">@font/forbiddenfruit</item>
+        <item name="font">@font/forbiddenfruit</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:shadowRadius">9</item>
+        <item name="android:shadowDx">9</item>
+        <item name="android:shadowDy">9</item>
     </style>
 
 </resources>
