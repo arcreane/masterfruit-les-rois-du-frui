@@ -1,28 +1,33 @@
 package com.codingfactory.fruitroulette.ui;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.codingfactory.fruitroulette.Fruits.Fruit;
 import com.codingfactory.fruitroulette.R;
+import com.codingfactory.fruitroulette.logic.GameSequence;
 
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    private ArrayList<ArrayList<Fruit>> guesses = new ArrayList<>();
-
+    private ArrayList<Integer[]> guesses = new ArrayList<>();
     private Context context;
+    private GameSequence game;
 
-    public RecyclerAdapter(Context context) {
+    public RecyclerAdapter(Context context, GameSequence game) {
         this.context = context;
+        this.game = game;
     }
 
     @NonNull
@@ -35,20 +40,30 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+//        String firstDrawable =  game.getPossibleFruit().get(guesses.get(position)[0]).getImg();
+//        String secondDrawable =  game.getPossibleFruit().get(guesses.get(position)[1]).getImg();
+//        String thirdDrawable =  game.getPossibleFruit().get(guesses.get(position)[2]).getImg();
+//        String fourthDrawable =  game.getPossibleFruit().get(guesses.get(position)[3]).getImg();
+
         ImageView[] imgs = {holder.firstImg, holder.secondImg, holder.thirdImg, holder.fourthImg};
+        holder.firstImg.setImageResource(context.getResources().getIdentifier(game.getPossibleFruit().get(guesses.get(position)[0]).getImg(), "drawable", context.getPackageName()));
+        holder.secondImg.setImageResource(context.getResources().getIdentifier(game.getPossibleFruit().get(guesses.get(position)[1]).getImg(), "drawable", context.getPackageName()));
+        holder.thirdImg.setImageResource(context.getResources().getIdentifier(game.getPossibleFruit().get(guesses.get(position)[2]).getImg(), "drawable", context.getPackageName()));
+        holder.fourthImg.setImageResource(context.getResources().getIdentifier(game.getPossibleFruit().get(guesses.get(position)[3]).getImg(), "drawable", context.getPackageName()));
 
-        holder.firstImg.setImageResource(context.getResources().getIdentifier(guesses.get(position).get(0).getImg(), "drawable", context.getPackageName()));
-        holder.secondImg.setImageResource(context.getResources().getIdentifier(guesses.get(position).get(1).getImg(), "drawable", context.getPackageName()));
-        holder.thirdImg.setImageResource(context.getResources().getIdentifier(guesses.get(position).get(2).getImg(), "drawable", context.getPackageName()));
-        holder.fourthImg.setImageResource(context.getResources().getIdentifier(guesses.get(position).get(3).getImg(), "drawable", context.getPackageName()));
-
-        // Test if banana not on the list:
-//        for (int i = 0; i < 4; i++) {
-//            if (guesses.get(position)[i].equals("ic_banana")) {
-//                imgs[i].setColorFilter(Color.LTGRAY);
-//                break;
-//            }
-//        }
+        for (int i = 0; i < 4; i++) {
+            switch (game.didIGuess(i)) {
+                case 0:
+                    imgs[i].getDrawable().setTint(Color.GRAY);
+                    break;
+                case 1:
+                    imgs[i].getDrawable().setTint(Color.GREEN);
+                    break;
+                case 2:
+                    imgs[i].getDrawable().setTint(Color.YELLOW);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -56,7 +71,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return this.guesses.size();
     }
 
-    public void setGuesses(ArrayList<ArrayList<Fruit>> guesses) {
+    public void setGuesses(ArrayList<Integer[]> guesses) {
         this.guesses = guesses;
         notifyDataSetChanged();
     }

@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/Strawberry.xml" value="0.32974358974358975" />
         <entry key="app/src/main/res/drawable/ic_banana.xml" value="0.23541666666666666" />
         <entry key="app/src/main/res/drawable/ic_grape.xml" value="0.23958333333333334" />
@@ -16,7 +17,7 @@
         <entry key="app/src/main/res/drawable/ic_strawberry.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/activity_gameplay.xml" value="0.2502771318874826" />
         <entry key="app/src/main/res/layout/dropdown_fruit.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/gameplay.xml" value="0.3016276924340788" />
+        <entry key="app/src/main/res/layout/gameplay.xml" value="0.1" />
         <entry key="app/src/main/res/layout/guess_row.xml" value="0.1" />
         <entry key="app/src/main/res/layout/main_menu.xml" value="0.39456419868791004" />
         <entry key="app/src/main/res/layout/selected_fruit.xml" value="0.16875" />
