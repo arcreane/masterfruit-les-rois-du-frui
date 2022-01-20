@@ -114,9 +114,10 @@ public class NewGame extends AppCompatActivity {
                             }
                             return true;
                         case R.id.peel_hint:
-                            game.getSecondHint();
-                            System.out.println("peel works");
-                            pb_attempt.setProgress(game.getAttempts(), true);
+                            if (game.canIGetAHint(2)) {
+                                game.getSecondHint();
+                                pb_attempt.setProgress(game.getAttempts(), true);
+                            }
                     }
                     return false;
                 }

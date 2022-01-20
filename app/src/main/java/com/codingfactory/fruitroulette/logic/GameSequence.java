@@ -61,7 +61,6 @@ public class GameSequence {
         if (canIGetAHint(2)) {
             for (int i = 0; i < 4; i++) {
                 if (this.getPossibleFruit().get(this.hiddenFruit.get(i)).hasSeeds()) {
-//                this.firstHint[i] = hasSeeds;
                 seedImg[i] = "ic_seeds";
                 } else {
                     seedImg[i] = "ic_no_seeds";
@@ -70,19 +69,23 @@ public class GameSequence {
             attempts -= 2;
             adapter.addPositions(0, 0);
             adapter.newLine(seedImg);
-        };
+        }
     }
 
-    public Boolean[] getSecondHint() {
-        if (canIGetAHint(3)) {
-            for (int i : this.hiddenFruit) {
-                boolean needsPeeling = this.possibleFruit.get(this.hiddenFruit.get(i)).needsPeeling();
-                this.secondHint[i] = needsPeeling;
+    public void getSecondHint() {
+        String[] peelImg = new String[4];
+        if (canIGetAHint(2)) {
+            for (int i = 0; i < 4; i++) {
+                if (this.getPossibleFruit().get(this.hiddenFruit.get(i)).needsPeeling()) {
+                    peelImg[i] = "ic_peel";
+                } else {
+                    peelImg[i] = "ic_no_seeds";
+                }
             }
-            attempts -= 3;
-            this.imgType = 2;
-            return this.secondHint;
-        } else return null;
+            attempts -= 2;
+            adapter.addPositions(0, 0);
+            adapter.newLine(peelImg);
+        }
     }
 
     public boolean canIGetAHint(int value) {
