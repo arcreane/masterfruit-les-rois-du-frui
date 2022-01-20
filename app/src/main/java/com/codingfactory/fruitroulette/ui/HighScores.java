@@ -1,21 +1,56 @@
 package com.codingfactory.fruitroulette.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.codingfactory.fruitroulette.MyDatabase.MyDatabaseHelper;
 import com.codingfactory.fruitroulette.R;
 
-public class HighScores extends Activity {
+import java.util.ArrayList;
 
+public class HighScores extends AppCompatActivity {
+
+    private TableLayout scoreTable;
+    private static final String DATABASE_NAME = "score_manager";
+    private ArrayList<String> highscoreTable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.high_scores);
+        MyDatabaseHelper scoreDb = new MyDatabaseHelper(this, DATABASE_NAME, null,1);
+        highscoreTable = scoreDb.getAllScores();
+        System.out.println(scoreDb.getAllScores());
+        scoreTable = findViewById(R.id.ScoreTable);
+        HighScoreDisplay(highscoreTable);
+    }
 
 
-//        Bundle extras = getIntent().getExtras();
-//        String url = extras.getString();
 
+
+
+
+    void HighScoreDisplay(ArrayList<String> highscoreTable) {
+
+        for (int i = 0; i<highscoreTable.size()-1; i+=2) {
+            TableRow currentRow = new TableRow(getApplicationContext());
+            TextView currentName = new TextView(getApplicationContext());
+            TextView currentScore = new TextView(getApplicationContext());
+
+            scoreTable.addView(currentRow);
+            currentName.setText(highscoreTable.get(i));
+            currentScore.setText(highscoreTable.get(i+1));
+
+            currentRow.addView(currentName, 0);
+            currentRow.addView(currentScore, 1);
+
+            currentName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            currentScore.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        }
     }
 }
