@@ -23,9 +23,9 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     private ArrayList<String[]> guesses = new ArrayList<>();
+    private ArrayList<String[]> positions = new ArrayList<>();
     private Context context;
     private GameSequence game;
-    private Boolean imgType;
 
     public RecyclerAdapter(Context context, GameSequence game) {
         this.context = context;
@@ -42,14 +42,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
 //            ImageView[] imgs = {holder.firstImg, holder.secondImg, holder.thirdImg, holder.fourthImg};
             holder.firstImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[0], "drawable", context.getPackageName()));
             holder.secondImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[1], "drawable", context.getPackageName()));
             holder.thirdImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[2], "drawable", context.getPackageName()));
             holder.fourthImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[3], "drawable", context.getPackageName()));
-            holder.rightIndicator.setText(String.valueOf(game.getRightPosition()));
-            holder.wrongIndicator.setText(String.valueOf(game.getWrongPosition()));
+          holder.rightIndicator.setText(positions.get(position)[0]);
+                holder.wrongIndicator.setText(positions.get(position)[1]);
+
+
     }
 
     @Override
@@ -57,9 +58,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return this.guesses.size();
     }
 
+    public void addPositions(int right, int wrong) {
+        this.positions.add(new String[] {String.valueOf(right), String.valueOf(wrong)});
+    }
+
     public void newLine(String[] guesses) {
         this.guesses.add(guesses);
         notifyDataSetChanged();
+    }
+
+    public void clear() {
+        this.guesses.clear();
+        this.positions.clear();
+        notifyItemRangeRemoved(0, this.guesses.size());
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

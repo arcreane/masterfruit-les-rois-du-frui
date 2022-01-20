@@ -11,7 +11,7 @@ public class GameSequence {
 
     private int imgType;
     private List<Fruity> possibleFruit;
-    private int attempts, fruitDiscovered,iterationScore;
+    private int attempts, fruitDiscovered, cumulatedScore;
     private int rightPosition, wrongPosition;
     private List<Integer> hiddenFruit;
     private Boolean[] firstHint, secondHint;
@@ -21,7 +21,7 @@ public class GameSequence {
     public GameSequence() {
         this.attempts = 10;
         this.fruitDiscovered = 0;
-        this.iterationScore = 0;
+        this.cumulatedScore = 0;
         this.possibleFruit = new ArrayList<>();
         possibleFruit.add(Fruity.STRAWBERRY);
         possibleFruit.add(Fruity.BANANA);
@@ -48,6 +48,11 @@ public class GameSequence {
             int fruit = random.nextInt(8);
             if (!hiddenFruit.contains(fruit)) hiddenFruit.add(fruit);
         }
+        System.out.println("hidden 0: " + hiddenFruit.get(0));
+        System.out.println("hidden 1: " + hiddenFruit.get(1));
+        System.out.println("hidden 2: " + hiddenFruit.get(2));
+        System.out.println("hidden 3: " + hiddenFruit.get(3));
+
         return hiddenFruit;
     }
 
@@ -63,7 +68,7 @@ public class GameSequence {
                 }
             }
             attempts -= 2;
-            this.imgType = 1;
+            adapter.addPositions(0, 0);
             adapter.newLine(seedImg);
         };
     }
@@ -89,26 +94,26 @@ public class GameSequence {
         this.attempts--;
         this.rightPosition = 0;
         this.wrongPosition = 0;
+        this.fruitDiscovered = 0;
         String[] recyclerLine = new String[4];
         for (int i = 0; i < 4; i++) {
             if (guessed[i] == this.hiddenFruit.get(i)) {
                 this.rightPosition++;
+                fruitDiscovered++;
             } else if (this.hiddenFruit.contains(guessed[i])) {
                 this.wrongPosition++;
             }
             recyclerLine[i] = getPossibleFruit().get(guessed[i]).getImg();
         }
         adapter.newLine(recyclerLine);
+        adapter.addPositions(rightPosition, wrongPosition);
         this.imgType = 0;
-        return didIWin();
+        return roundOver();
     }
 
-    public int didIGuess(int i) {
-        return this.guesses[i];
-    }
-
-    private boolean didIWin() {
-        return this.fruitDiscovered == 4;
+    public void newRound() {
+        reset();
+        cumulatedScore += attempts;
     }
 
     public int getRightPosition() {
@@ -119,15 +124,25 @@ public class GameSequence {
         return wrongPosition;
     }
 
-    public int getImgType() {
-        return this.imgType;
-    }
-
     public void setAdapter(RecyclerAdapter adapter) {
         this.adapter = adapter;
     }
 
     public int getAttempts() {
         return this.attempts;
+    }
+
+    public boolean roundOver() {
+        return (attempts == 0 || fruitDiscovered == 4);
+    }
+
+    public void reset() {
+        attempts = 10;
+        adapter.clear();
+        hiddenFruit = fruitGenerator();
+    }
+
+    public int getCumulatedScore() {
+        return this.cumulatedScore;
     }
 }

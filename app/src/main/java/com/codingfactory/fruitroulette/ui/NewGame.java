@@ -4,19 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codingfactory.fruitroulette.R;
-import com.codingfactory.fruitroulette.fruit.Fruity;
 import com.codingfactory.fruitroulette.logic.GameSequence;
 
 import java.util.ArrayList;
@@ -32,22 +35,26 @@ public class NewGame extends AppCompatActivity {
     private RecyclerAdapter adapter;
     private GameSequence game;
     private ProgressBar pb_attempt;
-    private Button b_Guess;
+    private ImageView get_hint;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(getWindow().FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        getSupportActionBar().hide();
+        getSupportActionBar().hide();
         setContentView(R.layout.gameplay);
         game = new GameSequence();
+        dialog = new Dialog(this);
 
         firstChoice = findViewById(R.id.first);
         secondChoice = findViewById(R.id.second);
         thirdChoice = findViewById(R.id.third);
         fourthChoice = findViewById(R.id.fourth);
         pb_attempt = findViewById(R.id.pb_attempt);
+        get_hint = findViewById(R.id.get_hint);
+        dialog = new Dialog(this);
 
         List<String> fruitImgs = new ArrayList<>();
         game.getPossibleFruit().stream().sorted().forEach(e -> fruitImgs.add(e.getImg()));
@@ -63,6 +70,7 @@ public class NewGame extends AppCompatActivity {
         pb_attempt.setMax(10);
         pb_attempt.setMin(0);
         pb_attempt.setProgress(10);
+        TextView score = findViewById(R.id.score_count);
 
         guessButton.setOnClickListener(view -> {
             if (emptyFields()) {
@@ -73,11 +81,12 @@ public class NewGame extends AppCompatActivity {
                 int thirdFruit = thirdChoice.getSelectedItemPosition()-1;
                 int fourthFruit = fourthChoice.getSelectedItemPosition()-1;
                 int intArray[] = {firstFruit, secondFruit, thirdFruit, fourthFruit};
-                game.makeAGuess(intArray);
+                if (game.makeAGuess(intArray)) {
+                    openEndGameDialog();
+                    adapter.clear();
+                    score.setText(String.valueOf(game.getCumulatedScore()));
+                }
                 pb_attempt.setProgress(game.getAttempts(), true);
-                System.out.println(game.getAttempts());
-                System.out.println(pb_attempt.getX());
-
             } else {
                 Toast.makeText(getApplicationContext(), "Uh oh, no two fruits can be the same!",Toast.LENGTH_SHORT).show();
             }
@@ -89,32 +98,37 @@ public class NewGame extends AppCompatActivity {
         guessView.setLayoutManager(new LinearLayoutManager(this));
         game.setAdapter(adapter);
         choices = new Spinner[]{firstChoice, secondChoice, thirdChoice, fourthChoice};
-    }
 
-    @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.seed_hint:
-                if (game.canIGetAHint(2)) {
-                    game.getFirstHint();
-                    pb_attempt.setProgress(game.getAttempts(), true);
+        get_hint.setOnClickListener(view -> {
+            PopupMenu popupMenu = new PopupMenu(getApplicationContext(), get_hint);
+            popupMenu.getMenuInflater().inflate(R.menu.hints_menu, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    // Toast message on menu item clicked
+                    switch (menuItem.getItemId()) {
+                        case R.id.seed_hint:
+                            if (game.canIGetAHint(2)) {
+                                game.getFirstHint();
+                                pb_attempt.setProgress(game.getAttempts(), true);
+                            }
+                            return true;
+                        case R.id.peel_hint:
+                            game.getSecondHint();
+                            System.out.println("peel works");
+                            pb_attempt.setProgress(game.getAttempts(), true);
+                    }
+                    return false;
                 }
-                System.out.println("works");
-                return true;
-            case R.id.peel_hint:
-                game.getSecondHint();
-                System.out.println("peel works");
-                pb_attempt.setProgress(game.getAttempts(), true);
-        }
-        return super.onOptionsItemSelected(item);
+            });
+            popupMenu.show();
+        });
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.hints_menu, menu);
-        return true;
+    private void openEndGameDialog() {
+        dialog.setContentView(R.layout.end_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
     }
 
     public boolean emptyFields() {
@@ -136,5 +150,20 @@ public class NewGame extends AppCompatActivity {
         } else {
             game.getFirstHint();
         }
+    }
+
+
+    public void newRound (View view) {
+            game.newRound();
+            dialog.dismiss();
+    };
+
+    public void restart(View view) {
+        game.reset();
+        dialog.dismiss();
+    }
+
+    public void quit(View view) {
+        dialog.dismiss();
     }
 }
