@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.codingfactory.fruitroulette.MyDatabase.MyDatabaseHelper;
 import com.codingfactory.fruitroulette.R;
 
 import java.util.ArrayList;
@@ -15,11 +16,15 @@ import java.util.ArrayList;
 public class HighScores extends AppCompatActivity {
 
     private TableLayout scoreTable;
+    private static final String DATABASE_NAME = "score_manager";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.high_scores);
+        MyDatabaseHelper scoreDb = new MyDatabaseHelper(this, DATABASE_NAME, null,1);
+        scoreDb.getAllScores();
+        System.out.println(scoreDb.getAllScores());
 
         scoreTable = findViewById(R.id.ScoreTable);
         HighScoreDisplay(highscoreTable);
