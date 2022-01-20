@@ -86,6 +86,7 @@ public class NewGame extends AppCompatActivity {
                     adapter.clear();
                     System.out.println(game.getCumulatedScore());
                     score.setText(String.valueOf(game.getCumulatedScore()));
+                    Arrays.stream(choices).sequential().forEach(e -> e.setSelection(0));
                 }
                 pb_attempt.setProgress(game.getAttempts(), true);
             } else {
