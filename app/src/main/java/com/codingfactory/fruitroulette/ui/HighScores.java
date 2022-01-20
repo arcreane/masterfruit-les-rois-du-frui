@@ -17,40 +17,33 @@ public class HighScores extends AppCompatActivity {
 
     private TableLayout scoreTable;
     private static final String DATABASE_NAME = "score_manager";
-
+    private ArrayList<String> highscoreTable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.high_scores);
         MyDatabaseHelper scoreDb = new MyDatabaseHelper(this, DATABASE_NAME, null,1);
-        scoreDb.getAllScores();
+        highscoreTable = scoreDb.getAllScores();
         System.out.println(scoreDb.getAllScores());
-
         scoreTable = findViewById(R.id.ScoreTable);
         HighScoreDisplay(highscoreTable);
     }
 
-    ArrayList<String[]> highscoreTable = new ArrayList<>();
-    //TableRow rowScore1 = findViewById(R.id.ScoreRow1);
 
 
 
 
-    void HighScoreDisplay(ArrayList<String[]> highscoreTable) {
 
-        String[] score1 = {"Thierry", "20"};
-        String[] score2 = {"Bob", "10"};
-        highscoreTable.add(score1);
-        highscoreTable.add(score2);
+    void HighScoreDisplay(ArrayList<String> highscoreTable) {
 
-        for (String[] rowScore : highscoreTable) {
+        for (int i = 0; i<highscoreTable.size()-1; i+=2) {
             TableRow currentRow = new TableRow(getApplicationContext());
             TextView currentName = new TextView(getApplicationContext());
             TextView currentScore = new TextView(getApplicationContext());
 
             scoreTable.addView(currentRow);
-            currentName.setText(rowScore[0]);
-            currentScore.setText(rowScore[1]);
+            currentName.setText(highscoreTable.get(i));
+            currentScore.setText(highscoreTable.get(i+1));
 
             currentRow.addView(currentName, 0);
             currentRow.addView(currentScore, 1);
