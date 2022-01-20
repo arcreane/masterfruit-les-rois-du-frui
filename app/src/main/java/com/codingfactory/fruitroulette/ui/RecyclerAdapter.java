@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -21,9 +22,10 @@ import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    private ArrayList<Integer[]> guesses = new ArrayList<>();
+    private ArrayList<String[]> guesses = new ArrayList<>();
     private Context context;
     private GameSequence game;
+    private Boolean imgType;
 
     public RecyclerAdapter(Context context, GameSequence game) {
         this.context = context;
@@ -40,30 +42,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        String firstDrawable =  game.getPossibleFruit().get(guesses.get(position)[0]).getImg();
-//        String secondDrawable =  game.getPossibleFruit().get(guesses.get(position)[1]).getImg();
-//        String thirdDrawable =  game.getPossibleFruit().get(guesses.get(position)[2]).getImg();
-//        String fourthDrawable =  game.getPossibleFruit().get(guesses.get(position)[3]).getImg();
 
-        ImageView[] imgs = {holder.firstImg, holder.secondImg, holder.thirdImg, holder.fourthImg};
-        holder.firstImg.setImageResource(context.getResources().getIdentifier(game.getPossibleFruit().get(guesses.get(position)[0]).getImg(), "drawable", context.getPackageName()));
-        holder.secondImg.setImageResource(context.getResources().getIdentifier(game.getPossibleFruit().get(guesses.get(position)[1]).getImg(), "drawable", context.getPackageName()));
-        holder.thirdImg.setImageResource(context.getResources().getIdentifier(game.getPossibleFruit().get(guesses.get(position)[2]).getImg(), "drawable", context.getPackageName()));
-        holder.fourthImg.setImageResource(context.getResources().getIdentifier(game.getPossibleFruit().get(guesses.get(position)[3]).getImg(), "drawable", context.getPackageName()));
-
-        for (int i = 0; i < 4; i++) {
-            switch (game.didIGuess(i)) {
-                case 0:
-                    imgs[i].getDrawable().setTint(Color.GRAY);
-                    break;
-                case 1:
-                    imgs[i].getDrawable().setTint(Color.GREEN);
-                    break;
-                case 2:
-                    imgs[i].getDrawable().setTint(Color.YELLOW);
-                    break;
-            }
-        }
+//            ImageView[] imgs = {holder.firstImg, holder.secondImg, holder.thirdImg, holder.fourthImg};
+            holder.firstImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[0], "drawable", context.getPackageName()));
+            holder.secondImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[1], "drawable", context.getPackageName()));
+            holder.thirdImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[2], "drawable", context.getPackageName()));
+            holder.fourthImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[3], "drawable", context.getPackageName()));
+            holder.rightIndicator.setText(String.valueOf(game.getRightPosition()));
+            holder.wrongIndicator.setText(String.valueOf(game.getWrongPosition()));
     }
 
     @Override
@@ -71,8 +57,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return this.guesses.size();
     }
 
-    public void setGuesses(ArrayList<Integer[]> guesses) {
-        this.guesses = guesses;
+    public void newLine(String[] guesses) {
+        this.guesses.add(guesses);
         notifyDataSetChanged();
     }
 
@@ -82,6 +68,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         private ImageView secondImg;
         private ImageView thirdImg;
         private ImageView fourthImg;
+        private TextView rightIndicator;
+        private TextView wrongIndicator;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,6 +77,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             secondImg = itemView.findViewById(R.id.secondGuess);
             thirdImg = itemView.findViewById(R.id.thirdGuess);
             fourthImg = itemView.findViewById(R.id.fourthGuess);
+            rightIndicator = itemView.findViewById(R.id.rightIndicator);
+            wrongIndicator = itemView.findViewById(R.id.wrongIndicator);
+
         }
     }
 }

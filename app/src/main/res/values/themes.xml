@@ -17,6 +17,7 @@
     <style name="Theme.FruitRoulette.Fullscreen" parent="Theme.FruitRoulette">
         <item name="android:actionBarStyle">@style/Widget.Theme.FruitRoulette.ActionBar.Fullscreen
         </item>
+        <item name="android:itemBackground">@color/black</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowBackground">@null</item>
         <item name="android:textColor">#ffffffff</item>"

@@ -43,10 +43,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text=" 0" />
+                android:text="0" />
 
             <ProgressBar
-                android:id="@+id/pB_Attempt"
+                android:id="@+id/pb_attempt"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -133,15 +133,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-<!--        <Button-->
-<!--            android:id="@+id/button"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Hint"-->
-<!--            android:onClick="getAHint"-->
-<!--            tools:layout_editor_absoluteX="279dp"-->
-<!--            tools:layout_editor_absoluteY="552dp"-->
-<!--            tools:ignore="MissingConstraints" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

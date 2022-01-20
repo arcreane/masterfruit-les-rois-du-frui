@@ -17,10 +17,11 @@
         <entry key="app/src/main/res/drawable/ic_strawberry.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/activity_gameplay.xml" value="0.2502771318874826" />
         <entry key="app/src/main/res/layout/dropdown_fruit.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/gameplay.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/guess_row.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/gameplay.xml" value="0.21479872065703692" />
+        <entry key="app/src/main/res/layout/guess_row.xml" value="0.23530659169690396" />
         <entry key="app/src/main/res/layout/main_menu.xml" value="0.39456419868791004" />
         <entry key="app/src/main/res/layout/selected_fruit.xml" value="0.16875" />
+        <entry key="app/src/main/res/menu/hints_menu.xml" value="0.2328125" />
       </map>
     </option>
   </component>

@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -24,12 +27,11 @@ import java.util.Set;
 
 public class NewGame extends AppCompatActivity {
 
-    private ArrayList<Integer[]> guesses;
     private Spinner firstChoice, secondChoice, thirdChoice, fourthChoice;
     private Spinner[] choices;
     private RecyclerAdapter adapter;
     private GameSequence game;
-    private ProgressBar pB_Attempt;
+    private ProgressBar pb_attempt;
     private Button b_Guess;
 
     @Override
@@ -37,14 +39,15 @@ public class NewGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(getWindow().FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
         setContentView(R.layout.gameplay);
-        GameSequence game = new GameSequence();
+        game = new GameSequence();
 
         firstChoice = findViewById(R.id.first);
         secondChoice = findViewById(R.id.second);
         thirdChoice = findViewById(R.id.third);
         fourthChoice = findViewById(R.id.fourth);
+        pb_attempt = findViewById(R.id.pb_attempt);
 
         List<String> fruitImgs = new ArrayList<>();
         game.getPossibleFruit().stream().sorted().forEach(e -> fruitImgs.add(e.getImg()));
@@ -56,8 +59,10 @@ public class NewGame extends AppCompatActivity {
 
         Arrays.stream(choices).sequential().forEach(e -> e.setAdapter(fruitAdapter));
 
-        guesses = new ArrayList<>();
         Button guessButton = findViewById(R.id.b_Guess);
+        pb_attempt.setMax(10);
+        pb_attempt.setMin(0);
+        pb_attempt.setProgress(10);
 
         guessButton.setOnClickListener(view -> {
             if (emptyFields()) {
@@ -67,15 +72,12 @@ public class NewGame extends AppCompatActivity {
                 int secondFruit = secondChoice.getSelectedItemPosition()-1;
                 int thirdFruit = thirdChoice.getSelectedItemPosition()-1;
                 int fourthFruit = fourthChoice.getSelectedItemPosition()-1;
-                System.out.println("Guessed 0: " + firstFruit);
-                System.out.println("Guessed 1: " + secondFruit);
-                System.out.println("Guessed 2: " + thirdFruit);
-                System.out.println("Guessed 3: " + fourthFruit);
-
                 int intArray[] = {firstFruit, secondFruit, thirdFruit, fourthFruit};
                 game.makeAGuess(intArray);
-                guesses.add(new Integer[] {firstFruit, secondFruit, thirdFruit, fourthFruit});
-                adapter.notifyDataSetChanged();
+                pb_attempt.setProgress(game.getAttempts(), true);
+                System.out.println(game.getAttempts());
+                System.out.println(pb_attempt.getX());
+
             } else {
                 Toast.makeText(getApplicationContext(), "Uh oh, no two fruits can be the same!",Toast.LENGTH_SHORT).show();
             }
@@ -85,8 +87,34 @@ public class NewGame extends AppCompatActivity {
         adapter = new RecyclerAdapter(this, game);
         guessView.setAdapter(adapter);
         guessView.setLayoutManager(new LinearLayoutManager(this));
-        adapter.setGuesses(guesses);
+        game.setAdapter(adapter);
         choices = new Spinner[]{firstChoice, secondChoice, thirdChoice, fourthChoice};
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.seed_hint:
+                if (game.canIGetAHint(2)) {
+                    game.getFirstHint();
+                    pb_attempt.setProgress(game.getAttempts(), true);
+                }
+                System.out.println("works");
+                return true;
+            case R.id.peel_hint:
+                game.getSecondHint();
+                System.out.println("peel works");
+                pb_attempt.setProgress(game.getAttempts(), true);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.hints_menu, menu);
+        return true;
     }
 
     public boolean emptyFields() {
