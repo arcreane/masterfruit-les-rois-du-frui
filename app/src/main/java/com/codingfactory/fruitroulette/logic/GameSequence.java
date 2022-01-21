@@ -14,7 +14,7 @@ public class GameSequence {
 
     private final List<Fruity> possibleFruit;
     private int attempts, fruitDiscovered, cumulatedScore, round;
-    private boolean firstHintGiven;
+    private boolean firstHintGiven, seedHintGiven, peelHintGiven;
     private List<Integer> hiddenFruit;
     private RecyclerAdapter adapter;
 
@@ -24,6 +24,8 @@ public class GameSequence {
         this.fruitDiscovered = 0;
         this.cumulatedScore = 0;
         this.round = 0;
+        this.seedHintGiven = false;
+        this.peelHintGiven = false;
         this.possibleFruit = new ArrayList<>(Arrays.asList(
                 Fruity.STRAWBERRY,
                 Fruity.BANANA,
@@ -52,9 +54,15 @@ public class GameSequence {
 
     //Returns a list of images that represent hints (either seeds or peel based on argument).
     public void getHint(int whichHint) {
-        String hintImg;
-        if (whichHint == 1) hintImg = "ic_seeds";
-        else hintImg = "ic_peel";
+        String hintImg = "";
+        if (whichHint == 1 && !seedHintGiven) {
+            hintImg = "ic_seeds";
+            seedHintGiven = true;
+        }
+        else if (!peelHintGiven) {
+            hintImg = "ic_peel";
+            peelHintGiven = true;
+        }
         String[] seedImg = new String[4];
         for (int i = 0; i < 4; i++) {
             if (whichHint == 1 && this.getPossibleFruit().get(this.hiddenFruit.get(i)).hasSeeds()) {
@@ -75,8 +83,8 @@ public class GameSequence {
 
     //Checks if user has enough attempts to get a hint.
     public boolean canIGetAHint() {
-        if (firstHintGiven) return this.attempts - 3 > 0;
-        else return this.attempts - 2 > 0;
+        if (firstHintGiven) return this.attempts - 3 >= 0;
+        else return this.attempts - 2 >= 0;
     }
 
     public boolean makeAGuess(int[] guessed) {
@@ -154,5 +162,13 @@ public class GameSequence {
     //Getter for all fruits.
     public List<Fruity> getPossibleFruit() {
         return this.possibleFruit;
+    }
+
+    public boolean getSeedHintGiven() {
+        return this.seedHintGiven;
+    }
+
+    public boolean getPeelHintGiven() {
+        return this.peelHintGiven;
     }
 }

@@ -108,19 +108,28 @@ public class NewGame extends AppCompatActivity {
         choices = new Spinner[]{firstChoice, secondChoice, thirdChoice, fourthChoice};
 
         //Setting the hint image when user asks for a Hint
-        //3 possibilities: one for seeds one for pealables and one blanc image when the fruit
+        //3 possibilities: one for seeds one for peelables and one blanc image when the fruit
         //isn't concerned by hint
         get_hint.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(getApplicationContext(), get_hint);
             popupMenu.getMenuInflater().inflate(R.menu.hints_menu, popupMenu.getMenu());
+            Toast toastMessage = Toast.makeText(getApplicationContext(), "Uh oh, you already have this hint!",Toast.LENGTH_SHORT);
             popupMenu.setOnMenuItemClickListener(menuItem -> {
                 if (game.canIGetAHint()) {
                     switch (menuItem.getItemId()) {
                         case R.id.seed_hint:
+                            if (game.getSeedHintGiven()) {
+                                toastMessage.show();
+                                return false;
+                            }
                             game.getHint(1);
                             pb_attempt.setProgress(game.getAttempts(), true);
                             return true;
                         case R.id.peel_hint:
+                            if (game.getPeelHintGiven()) {
+                                toastMessage.show();
+                                return false;
+                            }
                             game.getHint(2);
                             pb_attempt.setProgress(game.getAttempts(), true);
                     }
