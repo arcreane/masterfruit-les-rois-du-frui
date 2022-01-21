@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/forbiddenfruit"
-                    android:onClick="quit"
+                    android:onClick="backToMainMenu"
                     android:text="QUIT"
                     android:textSize="11sp"
                     android:layout_marginBottom="10dp"

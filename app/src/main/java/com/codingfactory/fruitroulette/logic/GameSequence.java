@@ -56,9 +56,13 @@ public class GameSequence {
         else hintImg = "ic_peel";
         String[] seedImg = new String[4];
         for (int i = 0; i < 4; i++) {
-            if (this.getPossibleFruit().get(this.hiddenFruit.get(i)).hasSeeds()) {
+            if (whichHint == 1 && this.getPossibleFruit().get(this.hiddenFruit.get(i)).hasSeeds()) {
                 seedImg[i] = hintImg;
-            } else seedImg[i] = "ic_blank_hint";
+            } else if (whichHint == 2 && this.getPossibleFruit().get(this.hiddenFruit.get(i)).needsPeeling()) {
+                seedImg[i] = hintImg;
+            } else {
+                seedImg[i] = "ic_blank_hint";
+            }
         }
         if (!firstHintGiven) {
             firstHintGiven = true;

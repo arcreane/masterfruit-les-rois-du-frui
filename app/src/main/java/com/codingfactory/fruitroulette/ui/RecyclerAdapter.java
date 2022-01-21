@@ -43,12 +43,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 //            ImageView[] imgs = {holder.firstImg, holder.secondImg, holder.thirdImg, holder.fourthImg};
-            holder.firstImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[0], "drawable", context.getPackageName()));
-            holder.secondImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[1], "drawable", context.getPackageName()));
-            holder.thirdImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[2], "drawable", context.getPackageName()));
-            holder.fourthImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[3], "drawable", context.getPackageName()));
-          holder.rightIndicator.setText(positions.get(position)[0]);
-                holder.wrongIndicator.setText(positions.get(position)[1]);
+        holder.firstImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[0], "drawable", context.getPackageName()));
+        holder.secondImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[1], "drawable", context.getPackageName()));
+        holder.thirdImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[2], "drawable", context.getPackageName()));
+        holder.fourthImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[3], "drawable", context.getPackageName()));
+        holder.rightIndicator.setText(positions.get(position)[0]);
+        holder.wrongIndicator.setText(positions.get(position)[1]);
+
 
 
     }

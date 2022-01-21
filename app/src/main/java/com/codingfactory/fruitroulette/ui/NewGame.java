@@ -39,6 +39,7 @@ public class NewGame extends AppCompatActivity {
     private ImageView get_hint;
     private Dialog dialog;
     private EditText playerName;
+    private RecyclerView guessView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,12 +90,13 @@ public class NewGame extends AppCompatActivity {
                     Arrays.stream(choices).sequential().forEach(e -> e.setSelection(0));
                 }
                 pb_attempt.setProgress(game.getAttempts(), true);
+                guessView.smoothScrollToPosition(adapter.getItemCount());
             } else {
                 Toast.makeText(getApplicationContext(), "Uh oh, no two fruits can be the same!",Toast.LENGTH_SHORT).show();
             }
         });
 
-        RecyclerView guessView = findViewById(R.id.guessView);
+        guessView = findViewById(R.id.guessView);
         adapter = new RecyclerAdapter(this, game);
         guessView.setAdapter(adapter);
         guessView.setLayoutManager(new LinearLayoutManager(this));
@@ -172,6 +174,10 @@ public class NewGame extends AppCompatActivity {
         } else {
             finish();
         }
+    }
+
+    public void backToMainMenu(View view) {
+        finish();
     }
 
     public void addScore(View view) {

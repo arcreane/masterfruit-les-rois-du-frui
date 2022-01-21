@@ -73,6 +73,9 @@ public class HighScores extends AppCompatActivity {
             currentName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             currentScore.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             currentRound.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            currentName.setTextSize(20);
+            currentRound.setTextSize(20);
+            currentScore.setTextSize(20);
 
         }
     }
