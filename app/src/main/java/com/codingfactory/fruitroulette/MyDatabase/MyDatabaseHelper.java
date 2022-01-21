@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.jar.Attributes;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
     String TABLE_SCORE ="high_scores";
@@ -26,9 +27,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String script = "CREATE TABLE " + TABLE_SCORE + "("
                 + COLUMN_SCORE_ID + " INTEGER PRIMARY KEY," + COLUMN_NAME + " TEXT,"
-                + COLUMN_SCORE + " TEXT" + ")";
+                + COLUMN_SCORE + " INTEGER " + ")";
         db.execSQL(script);
-        String init ="INSERT INTO " + TABLE_SCORE + " (name, score) "+ "VALUES" + "('Didier', '15') , ('Tomy','20')";
+        String init ="INSERT INTO " + TABLE_SCORE + " (name, score) "+ "VALUES" + "('Didier', 20) , ('Tomy',15)";
         db.execSQL(init);
     }
 
@@ -46,14 +47,22 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public ArrayList getAllScores() {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> array_list = new ArrayList<String>();
-        Cursor res = db.rawQuery( "select * from "+TABLE_SCORE+" order by "+ COLUMN_SCORE+ " desc " , null );
+        Cursor res = db.rawQuery( "select * from "+TABLE_SCORE+" order by "+COLUMN_SCORE+ " desc " , null );
         res.moveToFirst();
         while(!res.isAfterLast()) {
             array_list.add(res.getString(res.getColumnIndex(COLUMN_NAME)));
             array_list.add(res.getString(res.getColumnIndex(COLUMN_SCORE)));
             res.moveToNext();
+
         }
         return array_list;
+    }
+
+    public void addHighscore (String pseudo, int highscore){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String newScore = "INSERT INTO " + TABLE_SCORE + "("+ COLUMN_NAME +","+COLUMN_SCORE+")"+ " VALUES " + "("+ "'"+pseudo+"'"+ ","+ highscore+")";
+        db.execSQL(newScore);
+
     }
 
 
