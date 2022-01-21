@@ -35,8 +35,10 @@ public class HighScores extends AppCompatActivity {
 
         setContentView(R.layout.high_scores);
         MyDatabaseHelper scoreDb = new MyDatabaseHelper(this, DATABASE_NAME, null,1);
+        scoreDb.addHighscore("Claude",45 );
         highscoreTable = scoreDb.getAllScores();
         System.out.println(scoreDb.getAllScores());
+
         scoreTable = findViewById(R.id.ScoreTable);
         HighScoreDisplay(highscoreTable);
     }
