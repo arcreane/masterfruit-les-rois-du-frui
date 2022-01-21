@@ -28,7 +28,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_SCORE_ID + " INTEGER PRIMARY KEY," + COLUMN_NAME + " TEXT,"
                 + COLUMN_SCORE + " TEXT" + ")";
         db.execSQL(script);
-        String init ="INSERT INTO " + TABLE_SCORE + " (name, score) "+ "VALUES" + "('Didier', '20') , ('Tomy','15')";
+        String init ="INSERT INTO " + TABLE_SCORE + " (name, score) "+ "VALUES" + "('Didier', '15') , ('Tomy','20')";
         db.execSQL(init);
     }
 
@@ -46,7 +46,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public ArrayList getAllScores() {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> array_list = new ArrayList<String>();
-        Cursor res = db.rawQuery( "select * from "+TABLE_SCORE, null );
+        Cursor res = db.rawQuery( "select * from "+TABLE_SCORE+" order by "+ COLUMN_SCORE+ " desc " , null );
         res.moveToFirst();
         while(!res.isAfterLast()) {
             array_list.add(res.getString(res.getColumnIndex(COLUMN_NAME)));
