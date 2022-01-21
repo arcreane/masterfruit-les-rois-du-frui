@@ -1,5 +1,6 @@
 package com.codingfactory.fruitroulette.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TableLayout;
@@ -18,9 +19,20 @@ public class HighScores extends AppCompatActivity {
     private TableLayout scoreTable;
     private static final String DATABASE_NAME = "score_manager";
     private ArrayList<String> highscoreTable;
+    private String player;
+    private int score;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String player = getIntent().getStringExtra("playerName");
+        if (player != null) {
+            score = getIntent().getIntExtra("finalScore", 0);
+        }
+        System.out.println(player);
+        System.out.println(score);
+
         setContentView(R.layout.high_scores);
         MyDatabaseHelper scoreDb = new MyDatabaseHelper(this, DATABASE_NAME, null,1);
         highscoreTable = scoreDb.getAllScores();

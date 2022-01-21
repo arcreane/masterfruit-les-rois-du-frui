@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -173,8 +174,11 @@ public class NewGame extends AppCompatActivity {
 
     public void addScore(View view) {
         playerName = dialog.findViewById(R.id.playerName);
-        System.out.println(playerName.getText());
         if (!playerName.getText().equals("")) {
+            Intent scoresIntent = new Intent(NewGame.this, HighScores.class);
+            scoresIntent.putExtra("playerName", playerName.getText().toString());
+            scoresIntent.putExtra("finalScore", game.getCumulatedScore());
+            startActivity(scoresIntent);
             dialog.dismiss();
             finish();
         }
