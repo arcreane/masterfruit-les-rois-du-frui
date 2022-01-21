@@ -22,14 +22,14 @@ import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    private ArrayList<String[]> guesses = new ArrayList<>();
-    private ArrayList<String[]> positions = new ArrayList<>();
-    private Context context;
-    private GameSequence game;
+    //List of strings representing source of guessed fruit images or hints.
+    private final ArrayList<String[]> guesses = new ArrayList<>();
+    //List of strings representing correctly guessed fruit and misplaced fruit.
+    private final ArrayList<String[]> positions = new ArrayList<>();
+    private final Context context;
 
-    public RecyclerAdapter(Context context, GameSequence game) {
+    public RecyclerAdapter(Context context) {
         this.context = context;
-        this.game = game;
     }
 
     @NonNull
@@ -42,47 +42,51 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//            ImageView[] imgs = {holder.firstImg, holder.secondImg, holder.thirdImg, holder.fourthImg};
+        //When a new row is added, this sets image source for each fruit/hint.
         holder.firstImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[0], "drawable", context.getPackageName()));
         holder.secondImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[1], "drawable", context.getPackageName()));
         holder.thirdImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[2], "drawable", context.getPackageName()));
         holder.fourthImg.setImageResource(context.getResources().getIdentifier(guesses.get(position)[3], "drawable", context.getPackageName()));
+        //Displays correctly guessed fruit and misplaced fruit.
         holder.rightIndicator.setText(positions.get(position)[0]);
         holder.wrongIndicator.setText(positions.get(position)[1]);
-
-
-
     }
 
+    //Returns number of lines in RecyclerView.
     @Override
     public int getItemCount() {
         return this.guesses.size();
     }
 
+    //Converts number of right and wrong guesses to Strings and adds them to positions list.
     public void addPositions(int right, int wrong) {
         this.positions.add(new String[] {String.valueOf(right), String.valueOf(wrong)});
     }
 
+    //Adds to RecyclerView and refreshes view.
     public void newLine(String[] guesses) {
         this.guesses.add(guesses);
         notifyDataSetChanged();
     }
 
+    //Clear view when a new round or game is started.
     public void clear() {
         this.guesses.clear();
         this.positions.clear();
         notifyItemRangeRemoved(0, this.guesses.size());
+        notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView firstImg;
-        private ImageView secondImg;
-        private ImageView thirdImg;
-        private ImageView fourthImg;
-        private TextView rightIndicator;
-        private TextView wrongIndicator;
+        private final ImageView firstImg;
+        private final ImageView secondImg;
+        private final ImageView thirdImg;
+        private final ImageView fourthImg;
+        private final TextView rightIndicator;
+        private final TextView wrongIndicator;
 
+        //Tells RecyclerView where to find its fields.
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             firstImg = itemView.findViewById(R.id.firstGuess);

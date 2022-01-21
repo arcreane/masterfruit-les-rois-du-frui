@@ -33,12 +33,11 @@ public class NewGame extends AppCompatActivity {
 
     private Spinner firstChoice, secondChoice, thirdChoice, fourthChoice;
     private Spinner[] choices;
-    private RecyclerAdapter adapter;
     private GameSequence game;
     private ProgressBar pb_attempt;
     private ImageView get_hint;
     private Dialog dialog;
-    private EditText playerName;
+    private RecyclerAdapter adapter;
     private RecyclerView guessView;
     private TextView score;
 
@@ -102,7 +101,7 @@ public class NewGame extends AppCompatActivity {
         });
 
         guessView = findViewById(R.id.guessView);
-        adapter = new RecyclerAdapter(this, game);
+        adapter = new RecyclerAdapter(this);
         guessView.setAdapter(adapter);
         guessView.setLayoutManager(new LinearLayoutManager(this));
         game.setAdapter(adapter);
@@ -172,6 +171,7 @@ public class NewGame extends AppCompatActivity {
         game.reset();
         score.setText("0");
         dialog.dismiss();
+        adapter.clear();
     }
 
     public void quit(View view) {
@@ -187,7 +187,7 @@ public class NewGame extends AppCompatActivity {
     }
 
     public void addScore(View view) {
-        playerName = dialog.findViewById(R.id.playerName);
+        EditText playerName = dialog.findViewById(R.id.playerName);
         if (!playerName.getText().equals("")) {
             Intent scoresIntent = new Intent(NewGame.this, HighScores.class);
             scoresIntent.putExtra("playerName", playerName.getText().toString());
