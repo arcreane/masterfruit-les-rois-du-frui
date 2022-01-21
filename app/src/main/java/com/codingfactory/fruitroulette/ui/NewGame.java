@@ -155,6 +155,8 @@ public class NewGame extends AppCompatActivity {
         dialog.setContentView(resourceId);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
         if (resourceId == R.layout.end_dialog) {
             TextView score = dialog.findViewById(R.id.win_or_lose);
             score.setText("Score: " + game.getCumulatedScore());
