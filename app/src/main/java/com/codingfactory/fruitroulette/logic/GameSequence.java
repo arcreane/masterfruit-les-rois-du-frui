@@ -4,6 +4,7 @@ import com.codingfactory.fruitroulette.fruit.Fruity;
 import com.codingfactory.fruitroulette.ui.RecyclerAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -20,15 +21,16 @@ public class GameSequence {
         this.fruitDiscovered = 0;
         this.cumulatedScore = 0;
         this.round = 0;
-        this.possibleFruit = new ArrayList<>();
-        possibleFruit.add(Fruity.STRAWBERRY);
-        possibleFruit.add(Fruity.BANANA);
-        possibleFruit.add(Fruity.RASPBERRY);
-        possibleFruit.add(Fruity.KIWI);
-        possibleFruit.add(Fruity.ORANGE);
-        possibleFruit.add(Fruity.PLUM);
-        possibleFruit.add(Fruity.GRAPES);
-        possibleFruit.add(Fruity.LEMON);
+        this.possibleFruit = new ArrayList<>(Arrays.asList(
+                Fruity.STRAWBERRY,
+                Fruity.BANANA,
+                Fruity.RASPBERRY,
+                Fruity.KIWI,
+                Fruity.ORANGE,
+                Fruity.PLUM,
+                Fruity.GRAPES,
+                Fruity.LEMON
+                ));
         this.hiddenFruit = fruitGenerator();
     }
 
@@ -96,7 +98,7 @@ public class GameSequence {
         adapter.newLine(recyclerLine);
         adapter.addPositions(rightPosition, wrongPosition);
         if (fruitDiscovered == 4) {
-            cumulatedScore += attempts;
+            cumulatedScore += attempts + 1;
             round++;
         }
         return roundOver();
@@ -126,6 +128,7 @@ public class GameSequence {
 
     public void reset() {
         newRound();
+        fruitDiscovered = 0;
         cumulatedScore = 0;
         round = 0;
     }

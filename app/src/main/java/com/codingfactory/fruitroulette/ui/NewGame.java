@@ -40,6 +40,7 @@ public class NewGame extends AppCompatActivity {
     private Dialog dialog;
     private EditText playerName;
     private RecyclerView guessView;
+    private TextView score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class NewGame extends AppCompatActivity {
         pb_attempt.setMax(10);
         pb_attempt.setMin(0);
         pb_attempt.setProgress(10);
-        TextView score = findViewById(R.id.score_count);
+        score = findViewById(R.id.score_count);
 
         Button guessButton = findViewById(R.id.b_Guess);
         guessButton.setOnClickListener(view -> {
@@ -165,6 +166,7 @@ public class NewGame extends AppCompatActivity {
     public void restart(View view) {
         pb_attempt.setProgress(10);
         game.reset();
+        score.setText("0");
         dialog.dismiss();
     }
 
