@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/win_or_lose"
+                app:layout_constraintTop_toBottomOf="@+id/imageView"
                 app:layout_constraintVertical_bias="0.945"
                 tools:layout_editor_absoluteX="-73dp">
 
@@ -108,8 +108,8 @@
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:onClick="quit"
                     android:layout_marginBottom="20sp"
+                    android:onClick="quit"
                     android:text="Quit"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"
