@@ -108,6 +108,9 @@ public class NewGame extends AppCompatActivity {
         game.setAdapter(adapter);
         choices = new Spinner[]{firstChoice, secondChoice, thirdChoice, fourthChoice};
 
+        //Setting the hint image when user asks for a Hint
+        //3 possibilities: one for seeds one for pealables and one blanc image when the fruit
+        //isn't concerned by hint
         get_hint.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(getApplicationContext(), get_hint);
             popupMenu.getMenuInflater().inflate(R.menu.hints_menu, popupMenu.getMenu());
@@ -123,6 +126,7 @@ public class NewGame extends AppCompatActivity {
                             pb_attempt.setProgress(game.getAttempts(), true);
                     }
                 } else {
+                    //displays when user doesn't have enought attempts left to ask for hint
                     Toast.makeText(getApplicationContext(), "Uh oh, not enough points!",Toast.LENGTH_SHORT).show();
                 }
                 return false;
@@ -130,7 +134,7 @@ public class NewGame extends AppCompatActivity {
             popupMenu.show();
         });
     }
-
+    //Menu which displays at the end of a game
     private void openEndGameDialog(int resourceId) {
         dialog.setContentView(resourceId);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -140,6 +144,7 @@ public class NewGame extends AppCompatActivity {
             score.setText("Score: " + game.getCumulatedScore());
             TextView rounds = dialog.findViewById(R.id.rounds);
             rounds.setText("Rounds: " + game.getRound());
+            //New set option is only present when the game is won
             if (!game.isItAWin()) {
                 dialog.findViewById(R.id.new_round_button).setVisibility(View.GONE);
                 ImageView trophy = dialog.findViewById(R.id.trophy_img);
@@ -147,7 +152,7 @@ public class NewGame extends AppCompatActivity {
             }
         }
     }
-
+    //function to check if user selected a fruit in all spinners (if not he won't be able to guess)
     public boolean emptyFields() {
         for (Spinner s : choices) {
             if (s.getSelectedItemPosition() == 0) return true;
@@ -155,18 +160,21 @@ public class NewGame extends AppCompatActivity {
         return false;
     }
 
+    //Checks that all options selected are distinct
     public boolean distinctChoices() {
         Set<Integer> s = new HashSet<>();
         Arrays.stream(choices).sequential().forEach(e -> s.add(e.getSelectedItemPosition()));
         return (s.size() == 4);
     }
 
+    //new set
     public void newRound (View view) {
         pb_attempt.setProgress(10);
         game.newRound();
         dialog.dismiss();
     };
 
+    //new game, different from newRound in that it resets score and round numbers
     public void restart(View view) {
         pb_attempt.setProgress(10);
         game.reset();
@@ -174,6 +182,7 @@ public class NewGame extends AppCompatActivity {
         dialog.dismiss();
     }
 
+    //Quit allows to enter Name to save highscore in DB, if score is 0: kills the activity
     public void quit(View view) {
         if (game.getCumulatedScore() > 0) {
             openEndGameDialog(R.layout.new_score_dialog);
@@ -185,7 +194,8 @@ public class NewGame extends AppCompatActivity {
     public void backToMainMenu(View view) {
         finish();
     }
-
+    //Stocks datas relative to user hightscore, they will be transmited to HighScores.java
+    //to be added to DB and displayed
     public void addScore(View view) {
         playerName = dialog.findViewById(R.id.playerName);
         if (!playerName.getText().equals("")) {
