@@ -61,6 +61,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void addHighscore (String pseudo, int highscore){
         SQLiteDatabase db = this.getWritableDatabase();
         String newScore = "INSERT INTO " + TABLE_SCORE + "("+ COLUMN_NAME +","+COLUMN_SCORE+")"+ " VALUES " + "("+ "'"+pseudo+"'"+ ","+ highscore+")";
+
         db.execSQL(newScore);
 
     }

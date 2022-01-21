@@ -26,16 +26,18 @@ public class HighScores extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String player = getIntent().getStringExtra("playerName");
-        if (player != null) {
-            score = getIntent().getIntExtra("finalScore", 0);
-        }
+
         System.out.println(player);
         System.out.println(score);
 
         setContentView(R.layout.high_scores);
         MyDatabaseHelper scoreDb = new MyDatabaseHelper(this, DATABASE_NAME, null,1);
-        scoreDb.addHighscore("Claude",45 );
+        String player = getIntent().getStringExtra("playerName");
+        if (player != null) {
+            score = getIntent().getIntExtra("finalScore", 0);
+            scoreDb.addHighscore(player,score);
+        }
+
         highscoreTable = scoreDb.getAllScores();
         System.out.println(scoreDb.getAllScores());
 
