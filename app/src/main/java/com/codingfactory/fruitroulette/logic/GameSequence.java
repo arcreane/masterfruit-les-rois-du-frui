@@ -164,10 +164,12 @@ public class GameSequence {
         return this.possibleFruit;
     }
 
+    //Returns if seed hint has been given.
     public boolean getSeedHintGiven() {
         return this.seedHintGiven;
     }
 
+    //Returns if peel hint has been given.
     public boolean getPeelHintGiven() {
         return this.peelHintGiven;
     }

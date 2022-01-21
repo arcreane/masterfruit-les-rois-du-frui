@@ -1,5 +1,6 @@
 package com.codingfactory.fruitroulette.ui;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,38 +45,39 @@ public class NewGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Sets window to full screen.
         requestWindowFeature(getWindow().FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+       this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         setContentView(R.layout.gameplay);
+
+        //Initiates GameSequence.
         game = new GameSequence();
         dialog = new Dialog(this);
 
+        //Prepares spinners with each possible fruit.
         firstChoice = findViewById(R.id.first);
         secondChoice = findViewById(R.id.second);
         thirdChoice = findViewById(R.id.third);
         fourthChoice = findViewById(R.id.fourth);
         pb_attempt = findViewById(R.id.pb_attempt);
         get_hint = findViewById(R.id.get_hint);
-
         List<String> fruitImgs = new ArrayList<>();
         game.getPossibleFruit().stream().sorted().forEach(e -> fruitImgs.add(e.getImg()));
-
         SpinnerAdapter fruitAdapter = new SpinnerAdapter(getApplicationContext(), fruitImgs);
         fruitAdapter.setDropDownViewResource(R.layout.dropdown_fruit);
-
         choices = new Spinner[]{firstChoice, secondChoice, thirdChoice, fourthChoice};
+        //Sets adapter for each spinner (dropdown menus).
         Arrays.stream(choices).sequential().forEach(e -> e.setAdapter(fruitAdapter));
 
         //config of the progress bar
-
         pb_attempt.setMax(10);
         pb_attempt.setMin(0);
         pb_attempt.setProgress(10);
         score = findViewById(R.id.score_count);
 
         //Validation of the spinners on click guess button
-
         Button guessButton = findViewById(R.id.b_Guess);
         guessButton.setOnClickListener(view -> {
             if (emptyFields()) {
@@ -86,7 +88,9 @@ public class NewGame extends AppCompatActivity {
                 int thirdFruit = thirdChoice.getSelectedItemPosition()-1;
                 int fourthFruit = fourthChoice.getSelectedItemPosition()-1;
                 int intArray[] = {firstFruit, secondFruit, thirdFruit, fourthFruit};
+                //If fields are validated submits guess to GameSequence.
                 if (game.makeAGuess(intArray)) {
+                    //If round is over, dialog window is opened, RecyclerView and Spinner are cleared.
                     openEndGameDialog(R.layout.end_dialog);
                     adapter.clear();
                     System.out.println(game.getCumulatedScore());
@@ -100,15 +104,15 @@ public class NewGame extends AppCompatActivity {
             }
         });
 
+        //Sets adapter for RecyclerView.
         guessView = findViewById(R.id.guessView);
         adapter = new RecyclerAdapter(this);
         guessView.setAdapter(adapter);
         guessView.setLayoutManager(new LinearLayoutManager(this));
         game.setAdapter(adapter);
-        choices = new Spinner[]{firstChoice, secondChoice, thirdChoice, fourthChoice};
 
         //Setting the hint image when user asks for a Hint
-        //3 possibilities: one for seeds one for peelables and one blanc image when the fruit
+        //3 possibilities: one for seeds one for peelables and one blank image when the fruit
         //isn't concerned by hint
         get_hint.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(getApplicationContext(), get_hint);
@@ -134,7 +138,7 @@ public class NewGame extends AppCompatActivity {
                             pb_attempt.setProgress(game.getAttempts(), true);
                     }
                 } else {
-                    //displays when user doesn't have enought attempts left to ask for hint
+                    //displays when user doesn't have enough attempts left to ask for hint
                     Toast.makeText(getApplicationContext(), "Uh oh, not enough points!",Toast.LENGTH_SHORT).show();
                 }
                 return false;
@@ -142,6 +146,7 @@ public class NewGame extends AppCompatActivity {
             popupMenu.show();
         });
     }
+
     //Menu which displays at the end of a game
     private void openEndGameDialog(int resourceId) {
         dialog.setContentView(resourceId);
@@ -200,10 +205,7 @@ public class NewGame extends AppCompatActivity {
         }
     }
 
-    public void backToMainMenu(View view) {
-        finish();
-    }
-    //Stocks datas relative to user hightscore, they will be transmited to HighScores.java
+    //Stocks data relative to user high score, they will be transmitted to HighScores.java
     //to be added to DB and displayed
     public void addScore(View view) {
         EditText playerName = dialog.findViewById(R.id.playerName);
@@ -218,11 +220,13 @@ public class NewGame extends AppCompatActivity {
         }
     }
 
+    //Overrides back button by open dialog.
     @Override
     public void onBackPressed() {
         openEndGameDialog(R.layout.end_dialog);
     }
 
+    //Destroys activity.
     @Override
     protected void onDestroy() {
         super.onDestroy();
