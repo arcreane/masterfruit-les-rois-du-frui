@@ -9,13 +9,10 @@ import java.util.Random;
 
 public class GameSequence {
 
-    private int imgType;
-    private List<Fruity> possibleFruit;
+    private final List<Fruity> possibleFruit;
     private int attempts, fruitDiscovered, cumulatedScore;
-    private int rightPosition, wrongPosition;
+    private boolean firstHintGiven;
     private List<Integer> hiddenFruit;
-    private Boolean[] firstHint, secondHint;
-    private Integer[] guesses;
     private RecyclerAdapter adapter;
 
     public GameSequence() {
@@ -32,9 +29,6 @@ public class GameSequence {
         possibleFruit.add(Fruity.GRAPES);
         possibleFruit.add(Fruity.LEMON);
         this.hiddenFruit = fruitGenerator();
-        this.firstHint = new Boolean[4];
-        this.secondHint = new Boolean[4];
-        this.guesses = new Integer[4];
     }
 
     public List<Fruity> getPossibleFruit() {
@@ -56,55 +50,43 @@ public class GameSequence {
         return hiddenFruit;
     }
 
-    public void getFirstHint() {
+    public void getHint(int whichHint) {
+        String hintImg;
+        if (whichHint == 1) hintImg = "ic_seeds";
+        else hintImg = "ic_peel";
+
         String[] seedImg = new String[4];
-        if (canIGetAHint(2)) {
-            for (int i = 0; i < 4; i++) {
-                if (this.getPossibleFruit().get(this.hiddenFruit.get(i)).hasSeeds()) {
-                seedImg[i] = "ic_seeds";
-                } else {
-                    seedImg[i] = "ic_no_seeds";
-                }
-            }
-            attempts -= 2;
-            adapter.addPositions(0, 0);
-            adapter.newLine(seedImg);
+        for (int i = 0; i < 4; i++) {
+            if (this.getPossibleFruit().get(this.hiddenFruit.get(i)).hasSeeds()) {
+                seedImg[i] = hintImg;
+            } else seedImg[i] = "ic_blank_hint";
         }
+        if (!firstHintGiven) {
+            firstHintGiven = true;
+            attempts -= 2;
+        } else attempts -= 3;
+        adapter.addPositions(0, 0);
+        adapter.newLine(seedImg);
     }
 
-    public void getSecondHint() {
-        String[] peelImg = new String[4];
-        if (canIGetAHint(2)) {
-            for (int i = 0; i < 4; i++) {
-                if (this.getPossibleFruit().get(this.hiddenFruit.get(i)).needsPeeling()) {
-                    peelImg[i] = "ic_peel";
-                } else {
-                    peelImg[i] = "ic_no_seeds";
-                }
-            }
-            attempts -= 2;
-            adapter.addPositions(0, 0);
-            adapter.newLine(peelImg);
-        }
-    }
-
-    public boolean canIGetAHint(int value) {
-        return this.attempts - value >= 0;
+    public boolean canIGetAHint() {
+        if (firstHintGiven) return this.attempts - 3 > 0;
+        else return this.attempts - 2 > 0;
     }
 
     public boolean makeAGuess(int[] guessed) {
         // Each of the four fruits are checked against the generated hidden fruit list.
         this.attempts--;
-        this.rightPosition = 0;
-        this.wrongPosition = 0;
+        int rightPosition = 0;
+        int wrongPosition = 0;
         this.fruitDiscovered = 0;
         String[] recyclerLine = new String[4];
         for (int i = 0; i < 4; i++) {
             if (guessed[i] == this.hiddenFruit.get(i)) {
-                this.rightPosition++;
+                rightPosition++;
                 fruitDiscovered++;
             } else if (this.hiddenFruit.contains(guessed[i])) {
-                this.wrongPosition++;
+                wrongPosition++;
             }
             recyclerLine[i] = getPossibleFruit().get(guessed[i]).getImg();
         }
@@ -128,8 +110,12 @@ public class GameSequence {
         return this.attempts;
     }
 
+    public boolean isItAWin() {
+        return fruitDiscovered == 4;
+    }
+
     public boolean roundOver() {
-        return (attempts == 0 || fruitDiscovered == 4);
+        return (attempts == 0 || isItAWin());
     }
 
     public void reset() {

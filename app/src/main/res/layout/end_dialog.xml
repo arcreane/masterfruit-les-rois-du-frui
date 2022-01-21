@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="350dp"
-    android:layout_height="500dp"
+    android:layout_height="450dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:theme="@style/Theme.FruitRoulette.MainMenu">
@@ -32,6 +32,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/trophy_img"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:src="@drawable/ic_trophy"
@@ -45,12 +46,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=""
-                android:textSize="30sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="#717171"
+                android:text="SCORE: 0"
+                android:layout_marginTop="25dp"
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
@@ -91,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:onClick="quit"
+                    android:layout_marginBottom="20sp"
                     android:text="Quit"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"

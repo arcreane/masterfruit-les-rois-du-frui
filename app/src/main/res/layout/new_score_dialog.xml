@@ -39,9 +39,11 @@
                     android:textColor="@color/black" />
 
                 <TextView
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="30dp"
                     android:text="Enter your name to save score:" />
 
                 <EditText
@@ -74,6 +76,18 @@
                     android:fontFamily="@font/forbiddenfruit"
                     android:onClick="addScore"
                     android:text="ADD"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <Button
+                    android:id="@+id/new_quit_button"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/forbiddenfruit"
+                    android:onClick="quit"
+                    android:text="QUIT"
                     android:textSize="11sp"
                     android:layout_marginBottom="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"

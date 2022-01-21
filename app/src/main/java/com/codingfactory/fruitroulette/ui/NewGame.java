@@ -5,11 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -105,25 +103,21 @@ public class NewGame extends AppCompatActivity {
         get_hint.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(getApplicationContext(), get_hint);
             popupMenu.getMenuInflater().inflate(R.menu.hints_menu, popupMenu.getMenu());
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem menuItem) {
-                    // Toast message on menu item clicked
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                if (game.canIGetAHint()) {
                     switch (menuItem.getItemId()) {
                         case R.id.seed_hint:
-                            if (game.canIGetAHint(2)) {
-                                game.getFirstHint();
-                                pb_attempt.setProgress(game.getAttempts(), true);
-                            }
+                            game.getHint(1);
+                            pb_attempt.setProgress(game.getAttempts(), true);
                             return true;
                         case R.id.peel_hint:
-                            if (game.canIGetAHint(2)) {
-                                game.getSecondHint();
-                                pb_attempt.setProgress(game.getAttempts(), true);
-                            }
+                            game.getHint(2);
+                            pb_attempt.setProgress(game.getAttempts(), true);
                     }
-                    return false;
+                } else {
+                    Toast.makeText(getApplicationContext(), "Uh oh, not enough points!",Toast.LENGTH_SHORT).show();
                 }
+                return false;
             });
             popupMenu.show();
         });
@@ -133,6 +127,15 @@ public class NewGame extends AppCompatActivity {
         dialog.setContentView(resourceId);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
+        if (resourceId == R.layout.end_dialog) {
+            TextView score = dialog.findViewById(R.id.win_or_lose);
+            score.setText("Score: " + game.getCumulatedScore());
+            if (!game.isItAWin()) {
+                dialog.findViewById(R.id.new_round_button).setVisibility(View.GONE);
+                ImageView trophy = dialog.findViewById(R.id.trophy_img);
+                trophy.setColorFilter(Color.GRAY);
+            }
+        }
     }
 
     public boolean emptyFields() {
@@ -146,20 +149,12 @@ public class NewGame extends AppCompatActivity {
         Set<Integer> s = new HashSet<>();
         Arrays.stream(choices).sequential().forEach(e -> s.add(e.getSelectedItemPosition()));
         return (s.size() == 4);
-        }
-
-    public void getFirstHint(View view) {
-        if (!game.canIGetAHint(2)) {
-            Toast.makeText(getApplicationContext(), "Uh oh, not enough points!",Toast.LENGTH_SHORT).show();
-        } else {
-            game.getFirstHint();
-        }
     }
 
     public void newRound (View view) {
         pb_attempt.setProgress(10);
         game.newRound();
-            dialog.dismiss();
+        dialog.dismiss();
     };
 
     public void restart(View view) {
@@ -171,6 +166,8 @@ public class NewGame extends AppCompatActivity {
     public void quit(View view) {
         if (game.getCumulatedScore() > 0) {
             openEndGameDialog(R.layout.new_score_dialog);
+        } else {
+            finish();
         }
     }
 
@@ -178,8 +175,13 @@ public class NewGame extends AppCompatActivity {
         playerName = dialog.findViewById(R.id.playerName);
         System.out.println(playerName.getText());
         if (!playerName.getText().equals("")) {
-               dialog.dismiss();
-               finish();
+            dialog.dismiss();
+            finish();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        openEndGameDialog(R.layout.end_dialog);
     }
 }

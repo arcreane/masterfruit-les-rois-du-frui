@@ -30,10 +30,6 @@
         <item name="fontFamily">@font/forbiddenfruit</item>
         <item name="font">@font/forbiddenfruit</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:shadowColor">@color/black</item>
-        <item name="android:shadowRadius">9</item>
-        <item name="android:shadowDx">9</item>
-        <item name="android:shadowDy">9</item>
     </style>
 
 </resources>
