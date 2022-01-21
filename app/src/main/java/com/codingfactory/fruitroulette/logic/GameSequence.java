@@ -116,6 +116,8 @@ public class GameSequence {
 
     //Resets attempts, clears RecyclerAdapter and generates new fruit.
     public void newRound() {
+        this.seedHintGiven = false;
+        this.peelHintGiven = false;
         attempts = 10;
         adapter.clear();
         hiddenFruit = fruitGenerator();
