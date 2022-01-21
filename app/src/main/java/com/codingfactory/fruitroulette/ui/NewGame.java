@@ -68,10 +68,14 @@ public class NewGame extends AppCompatActivity {
         choices = new Spinner[]{firstChoice, secondChoice, thirdChoice, fourthChoice};
         Arrays.stream(choices).sequential().forEach(e -> e.setAdapter(fruitAdapter));
 
+        //config of the progress bar
+
         pb_attempt.setMax(10);
         pb_attempt.setMin(0);
         pb_attempt.setProgress(10);
         score = findViewById(R.id.score_count);
+
+        //Validation of the spinners on click guess button
 
         Button guessButton = findViewById(R.id.b_Guess);
         guessButton.setOnClickListener(view -> {
