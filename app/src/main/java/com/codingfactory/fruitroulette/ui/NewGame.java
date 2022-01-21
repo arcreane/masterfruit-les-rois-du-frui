@@ -131,6 +131,8 @@ public class NewGame extends AppCompatActivity {
         if (resourceId == R.layout.end_dialog) {
             TextView score = dialog.findViewById(R.id.win_or_lose);
             score.setText("Score: " + game.getCumulatedScore());
+            TextView rounds = dialog.findViewById(R.id.rounds);
+            rounds.setText("Rounds: " + game.getRound());
             if (!game.isItAWin()) {
                 dialog.findViewById(R.id.new_round_button).setVisibility(View.GONE);
                 ImageView trophy = dialog.findViewById(R.id.trophy_img);
@@ -178,6 +180,7 @@ public class NewGame extends AppCompatActivity {
             Intent scoresIntent = new Intent(NewGame.this, HighScores.class);
             scoresIntent.putExtra("playerName", playerName.getText().toString());
             scoresIntent.putExtra("finalScore", game.getCumulatedScore());
+            scoresIntent.putExtra("finalRound", game.getRound());
             startActivity(scoresIntent);
             dialog.dismiss();
             finish();
@@ -187,5 +190,11 @@ public class NewGame extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         openEndGameDialog(R.layout.end_dialog);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dialog.dismiss();
     }
 }

@@ -10,7 +10,7 @@ import java.util.Random;
 public class GameSequence {
 
     private final List<Fruity> possibleFruit;
-    private int attempts, fruitDiscovered, cumulatedScore;
+    private int attempts, fruitDiscovered, cumulatedScore, round;
     private boolean firstHintGiven;
     private List<Integer> hiddenFruit;
     private RecyclerAdapter adapter;
@@ -19,6 +19,7 @@ public class GameSequence {
         this.attempts = 10;
         this.fruitDiscovered = 0;
         this.cumulatedScore = 0;
+        this.round = 0;
         this.possibleFruit = new ArrayList<>();
         possibleFruit.add(Fruity.STRAWBERRY);
         possibleFruit.add(Fruity.BANANA);
@@ -46,7 +47,6 @@ public class GameSequence {
         System.out.println("hidden 1: " + hiddenFruit.get(1));
         System.out.println("hidden 2: " + hiddenFruit.get(2));
         System.out.println("hidden 3: " + hiddenFruit.get(3));
-
         return hiddenFruit;
     }
 
@@ -54,7 +54,6 @@ public class GameSequence {
         String hintImg;
         if (whichHint == 1) hintImg = "ic_seeds";
         else hintImg = "ic_peel";
-
         String[] seedImg = new String[4];
         for (int i = 0; i < 4; i++) {
             if (this.getPossibleFruit().get(this.hiddenFruit.get(i)).hasSeeds()) {
@@ -92,7 +91,10 @@ public class GameSequence {
         }
         adapter.newLine(recyclerLine);
         adapter.addPositions(rightPosition, wrongPosition);
-        if (fruitDiscovered == 4) cumulatedScore += attempts;
+        if (fruitDiscovered == 4) {
+            cumulatedScore += attempts;
+            round++;
+        }
         return roundOver();
     }
 
@@ -121,6 +123,11 @@ public class GameSequence {
     public void reset() {
         newRound();
         cumulatedScore = 0;
+        round = 0;
+    }
+
+    public int getRound() {
+        return this.round;
     }
 
     public int getCumulatedScore() {

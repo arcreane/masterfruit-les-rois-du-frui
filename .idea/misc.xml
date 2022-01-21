@@ -20,9 +20,10 @@
         <entry key="app/src/main/res/font/pixelmania.xml" value="0.278125" />
         <entry key="app/src/main/res/layout/activity_gameplay.xml" value="0.2502771318874826" />
         <entry key="app/src/main/res/layout/dropdown_fruit.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/end_dialog.xml" value="0.3476714269854909" />
+        <entry key="app/src/main/res/layout/end_dialog.xml" value="0.3987635239567233" />
         <entry key="app/src/main/res/layout/gameplay.xml" value="0.335" />
         <entry key="app/src/main/res/layout/guess_row.xml" value="0.23530659169690396" />
+        <entry key="app/src/main/res/layout/high_scores.xml" value="0.25" />
         <entry key="app/src/main/res/layout/main_menu.xml" value="0.1" />
         <entry key="app/src/main/res/layout/new_score_dialog.xml" value="0.45" />
         <entry key="app/src/main/res/layout/selected_fruit.xml" value="0.16875" />
