@@ -31,6 +31,8 @@ public class HighScores extends AppCompatActivity {
         System.out.println(player);
         System.out.println(score);
 
+        //Get highscore from sqlite database
+
         setContentView(R.layout.high_scores);
         MyDatabaseHelper scoreDb = new MyDatabaseHelper(this, DATABASE_NAME, null,1);
         player = getIntent().getStringExtra("playerName");
@@ -41,6 +43,8 @@ public class HighScores extends AppCompatActivity {
             scoreDb.addHighscore(player,score,round);
         }
 
+        //display scores
+
         highscoreTable = scoreDb.getAllScores();
         System.out.println(scoreDb.getAllScores());
 
@@ -49,11 +53,9 @@ public class HighScores extends AppCompatActivity {
     }
 
 
-
-
-
-
     void HighScoreDisplay(ArrayList<String> highscoreTable) {
+
+        //Function to create new rows for new score
 
         for (int i = 0; i<highscoreTable.size()-1; i+=3) {
             TableRow currentRow = new TableRow(getApplicationContext());
@@ -69,6 +71,8 @@ public class HighScores extends AppCompatActivity {
             currentRow.addView(currentName, 0);
             currentRow.addView(currentScore, 1);
             currentRow.addView(currentRound, 2);
+
+            //Row format (textalignment, textsize)
 
             currentName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             currentScore.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
