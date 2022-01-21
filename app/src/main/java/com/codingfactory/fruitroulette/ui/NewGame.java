@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -55,6 +56,7 @@ public class NewGame extends AppCompatActivity {
         //Initiates GameSequence.
         game = new GameSequence();
         dialog = new Dialog(this);
+        MediaPlayer audio = MediaPlayer.create(NewGame.this, R.raw.coin);
 
         //Prepares spinners with each possible fruit.
         firstChoice = findViewById(R.id.first);
@@ -99,6 +101,7 @@ public class NewGame extends AppCompatActivity {
                 }
                 pb_attempt.setProgress(game.getAttempts(), true);
                 guessView.smoothScrollToPosition(adapter.getItemCount());
+                audio.start();
             } else {
                 Toast.makeText(getApplicationContext(), "Uh oh, no two fruits can be the same!",Toast.LENGTH_SHORT).show();
             }
@@ -220,7 +223,7 @@ public class NewGame extends AppCompatActivity {
         }
     }
 
-    //Overrides back button by open dialog.
+    //Overrides back button by opening dialog.
     @Override
     public void onBackPressed() {
         openEndGameDialog(R.layout.end_dialog);
