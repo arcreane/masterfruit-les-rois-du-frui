@@ -197,8 +197,9 @@ public class NewGame extends AppCompatActivity {
         pb_attempt.setProgress(10);
         game.reset();
         score.setText("0");
-        dialog.dismiss();
+        Arrays.stream(choices).sequential().forEach(e -> e.setSelection(0));
         adapter.clear();
+        dialog.dismiss();
     }
 
     //Quit allows to enter Name to save highscore in DB, if score is 0: kills the activity
