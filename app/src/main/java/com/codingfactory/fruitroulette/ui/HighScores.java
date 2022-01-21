@@ -21,6 +21,7 @@ public class HighScores extends AppCompatActivity {
     private ArrayList<String> highscoreTable;
     private String player;
     private int score;
+    private int round;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +33,12 @@ public class HighScores extends AppCompatActivity {
 
         setContentView(R.layout.high_scores);
         MyDatabaseHelper scoreDb = new MyDatabaseHelper(this, DATABASE_NAME, null,1);
-        String player = getIntent().getStringExtra("playerName");
+        player = getIntent().getStringExtra("playerName");
+
         if (player != null) {
             score = getIntent().getIntExtra("finalScore", 0);
-            scoreDb.addHighscore(player,score);
+            round = getIntent().getIntExtra("finalRound",0);
+            scoreDb.addHighscore(player,score,round);
         }
 
         highscoreTable = scoreDb.getAllScores();
@@ -52,20 +55,24 @@ public class HighScores extends AppCompatActivity {
 
     void HighScoreDisplay(ArrayList<String> highscoreTable) {
 
-        for (int i = 0; i<highscoreTable.size()-1; i+=2) {
+        for (int i = 0; i<highscoreTable.size()-1; i+=3) {
             TableRow currentRow = new TableRow(getApplicationContext());
             TextView currentName = new TextView(getApplicationContext());
             TextView currentScore = new TextView(getApplicationContext());
+            TextView currentRound = new TextView(getApplicationContext());
 
             scoreTable.addView(currentRow);
             currentName.setText(highscoreTable.get(i));
             currentScore.setText(highscoreTable.get(i+1));
+            currentRound.setText(highscoreTable.get(i+2));
 
             currentRow.addView(currentName, 0);
             currentRow.addView(currentScore, 1);
+            currentRow.addView(currentRound, 2);
 
             currentName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             currentScore.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            currentRound.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         }
     }
