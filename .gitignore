@@ -32,3 +32,5 @@ google-services.json
 # Android Profiling
 *.hprof
 .gradle/7.0.2/executionHistory/executionHistory.bin
+
+**/.DS_Store
