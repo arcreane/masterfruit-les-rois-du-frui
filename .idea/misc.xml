@@ -4,6 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.1" />
+        <entry key="..\:/Users/tibz7/Desktop/Repo Git/masterfruit-les-rois-du-frui/app/src/main/res/layout/dropdown_fruit.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/tibz7/Desktop/Repo Git/masterfruit-les-rois-du-frui/app/src/main/res/layout/end_dialog.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/tibz7/Desktop/Repo Git/masterfruit-les-rois-du-frui/app/src/main/res/layout/gameplay.xml" value="0.16799999999999998" />
+        <entry key="..\:/Users/tibz7/Desktop/Repo Git/masterfruit-les-rois-du-frui/app/src/main/res/layout/guess_row.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/tibz7/Desktop/Repo Git/masterfruit-les-rois-du-frui/app/src/main/res/layout/high_scores.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/tibz7/Desktop/Repo Git/masterfruit-les-rois-du-frui/app/src/main/res/layout/main_menu.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/tibz7/Desktop/Repo Git/masterfruit-les-rois-du-frui/app/src/main/res/layout/new_score_dialog.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/tibz7/Desktop/Repo Git/masterfruit-les-rois-du-frui/app/src/main/res/layout/selected_fruit.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/Strawberry.xml" value="0.32974358974358975" />
         <entry key="app/src/main/res/drawable/ic_banana.xml" value="0.23541666666666666" />
         <entry key="app/src/main/res/drawable/ic_grape.xml" value="0.23958333333333334" />
@@ -32,7 +40,7 @@
     </option>
   </component>
   <component name="JavadocGenerationManager">
-    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/Desktop/JavaDoc" />
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../../JavaDoc" />
     <option name="OPTION_INCLUDE_LIBS" value="true" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
